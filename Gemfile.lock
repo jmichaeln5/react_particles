@@ -83,6 +83,9 @@ GEM
       activesupport (>= 5.0)
     i18n (1.10.0)
       concurrent-ruby (~> 1.0)
+    importmap-rails (1.0.3)
+      actionpack (>= 6.0.0)
+      railties (>= 6.0.0)
     io-wait (0.2.1)
     loofah (2.14.0)
       crass (~> 1.0.2)
@@ -167,6 +170,7 @@ PLATFORMS
 
 DEPENDENCIES
   faker (~> 2.20)
+  importmap-rails (~> 1.0)
   pg (~> 1.1)
   puma (~> 5.0)
   react_particles!
