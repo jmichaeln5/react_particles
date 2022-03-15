@@ -1,14 +1,43 @@
 <p style="color: green"><%= notice %></p>
 
-<h1>Posts</h1>
-
+<div class="card">
+  <div class="p-2">
+    <div class="display-5 text-center">
+      <div class="p-2">
+        Posts
+      </div>
+    </div>
+  </div>
+</div>
+<div class="py-2">
+  <div class="d-grid gap-2 my-2 mx-auto">
+  <%= link_to "New post", new_post_path, class:'btn btn-outline-primary ' %>
+  </div>
+</div>
 <div id="posts">
-  <% @posts.each do |post| %>
-    <%= render post %>
-    <p>
-      <%= link_to "Show this post", post %>
-    </p>
+  <% @posts.each_slice(3) do |posts| %>
+    <div class="row">
+      <% posts.each do |post| %>
+        <div class="col-md-4 p-2">
+          <div class="card">
+            <div class="p-2">
+              <br>
+              <div class="display-6" style="font-size: 130%;">
+                <%= post.title %>
+              </div>
+              <br>
+              <div class="lead" style="font-size: 100%;">
+                <%= post.body %>
+              </div>
+              <br>
+              <div class="lead" style="font-size: 90%;">
+                <%= link_to "View", post %>
+              </div>
+              <br>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
   <% end %>
 </div>
-
-<%= link_to "New post", new_post_path %>

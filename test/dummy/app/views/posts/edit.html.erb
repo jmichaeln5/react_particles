@@ -2,9 +2,6 @@
 
 <%= render "form", post: @post %>
 
-<br>
+<%= button_to "Destroy this post", @post, method: :delete, class:'btn btn-outline-danger mb-3' %>
 
-<div>
-  <%= link_to "Show this post", @post %> |
-  <%= link_to "Back to posts", posts_path %>
-</div>
+<br>
