@@ -8,5 +8,8 @@ gem "sqlite3"
 
 gem "sprockets-rails"
 
+# Use the Puma web server [https://github.com/puma/puma]
+gem "puma", "~> 5.0"
+
 # Start debugger with binding.b [https://github.com/ruby/debug]
 # gem "debug", ">= 1.0.0"
