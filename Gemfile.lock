@@ -155,9 +155,14 @@ GEM
       actionpack (>= 5.2)
       activesupport (>= 5.2)
       sprockets (>= 3.0.0)
+    stimulus-rails (1.0.4)
+      railties (>= 6.0.0)
     strscan (3.0.1)
     thor (1.2.1)
     timeout (0.2.0)
+    turbo-rails (1.0.1)
+      actionpack (>= 6.0.0)
+      railties (>= 6.0.0)
     tzinfo (2.0.4)
       concurrent-ruby (~> 1.0)
     websocket-driver (0.7.5)
@@ -175,6 +180,8 @@ DEPENDENCIES
   puma (~> 5.0)
   react_particles!
   sprockets-rails
+  stimulus-rails
+  turbo-rails
 
 BUNDLED WITH
    2.3.8
