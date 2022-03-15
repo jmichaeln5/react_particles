@@ -24,7 +24,7 @@ module ReactParticles
     initializer('react_particles',
             after: :load_config_initializers) do |app|
       Rails.application.routes.prepend do
-        mount Passages::Engine, at: '/react_particles'
+        mount ReactParticles::Engine, at: '/react_particles'
       end
     end
 
