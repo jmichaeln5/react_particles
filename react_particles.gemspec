@@ -7,7 +7,7 @@ Gem::Specification.new do |spec|
   spec.email       = ["jmichaeln5@gmail.com"]
   spec.homepage    = "https://github.com/jmichaeln5/react_particles"
   spec.summary     = "A flexible Rails engine to integrate page specific React applications with esbuild"
-  spec.description = "Inspired by react-rails gem, this engine provides an ecapsulated React Application but bundles with esbuild instead of Webpacker"
+  spec.description = "Inspired by react-rails gem, this engine provides a React Application bundled with esbuild for separation of concerns."
     spec.license     = "MIT"
 
   # Prevent pushing this gem to RubyGems.org. To allow pushes either set the "allowed_push_host"
