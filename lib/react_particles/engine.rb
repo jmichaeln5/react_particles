@@ -21,12 +21,12 @@ module ReactParticles
       ## https://jakeyesbeck.com/2016/03/20/how-to-build-a-ruby-on-rails-engine/
         ## Find in page:
         ## Alternatively, an Engine can mount itself using the same initializer method in engine.rb:
-    initializer('react_particles',
-            after: :load_config_initializers) do |app|
-      Rails.application.routes.prepend do
-        mount ReactParticles::Engine, at: '/react_particles'
-      end
-    end
+    # initializer('react_particles',
+    #         after: :load_config_initializers) do |app|
+    #   Rails.application.routes.prepend do
+    #     mount ReactParticles::Engine, at: '/react_particles'
+    #   end
+    # end
 
   end
 end
