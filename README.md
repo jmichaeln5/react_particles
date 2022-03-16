@@ -1,4 +1,4 @@
-# ReactParticles
+# ReactParticles *** WIP ***
 Short description and motivation.
 
 ## Usage
