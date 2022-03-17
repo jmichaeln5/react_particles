@@ -24,4 +24,14 @@ Gem::Specification.new do |spec|
 
   spec.required_ruby_version = '>= 2.7.0'
   spec.add_dependency "rails", ">= 7.0"
+
+  spec.add_development_dependency "appraisal" # https://github.com/thoughtbot/appraisal
+
+=begin
+    To test:
+      All Rails Versions:
+                                  $ bundle exec appraisal rspec spec
+      Secific Rails Versions:
+                                  $ bundle exec appraisal rails-7 rspec spec
+=end
 end
