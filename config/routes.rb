@@ -1,4 +1,4 @@
 ReactParticles::Engine.routes.draw do
-  root to: 'components#index'
-  get 'components/root'
+  root to: 'components#root'
+  get 'components/index'
 end
