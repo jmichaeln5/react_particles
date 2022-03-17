@@ -1,18 +1,11 @@
-require 'generators/react_particles/generator_helpers'
-
 module ReactParticles
   module Generators
     class ControllerGenerator < Rails::Generators::NamedBase
       include Rails::Generators::ResourceHelpers
-      include ReactParticles::Generators::GeneratorHelpers
 
       desc "Generates controller, controller_spec and views for the model with the given NAME."
-      #
+
       source_root File.expand_path('../templates', __FILE__)
-      #
-      # def copy_controller_and_spec_files
-      #   template "controller.rb", File.join("app/controllers", "#{controller_file_name}_controller.rb")
-      # end
 
       argument :actions, type: :array, default: [], banner: "action action"
       class_option :skip_routes, type: :boolean, desc: "Don't add routes to config/routes.rb."
@@ -27,7 +20,7 @@ module ReactParticles
       def add_routes
         return if options[:skip_routes]
         return if actions.empty?
-        
+
         routing_code = actions.map { |action| "get '#{file_name}/#{action}'" }.join("\n")
         route routing_code, namespace: regular_class_path
       end
