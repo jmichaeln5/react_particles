@@ -6,7 +6,6 @@ module ReactParticles
   module Generators
     class InstallGenerator < Rails::Generators::Base
       include ReactParticles::GeneratorHelpers
-      # source_root File.expand_path("../templates", __FILE__) # before
       source_root File.expand_path("../../templates", __FILE__)
 
       class_option :namespace, type: :string, default: "react_application"
@@ -39,7 +38,7 @@ module ReactParticles
         )
       end
 
-      # def create_react_application_routes
+      # def create_react_application_routes # Adminstrate gem
       #   # if react_application_resources.none?
       #   #   call_generator("react_particles:routes", "--namespace", namespace)
       #   #   Rails.application.reload_routes!
@@ -49,8 +48,8 @@ module ReactParticles
       def create_react_application_routes
         ### Works under http://localhost:3000/components/index
         route "scope module: '#{namespace}' do \n" \
-              "   get 'components/index'\n"\
-              "end\n\n"
+              "   get 'components/index' # found at http://localhost:3000/components/index"\
+              "\nend\n\n"
         Rails.application.reload_routes!
       end
 
