@@ -35,20 +35,11 @@ module ReactParticles
       def create_react_application_routes
         # route "resources :people" # works
         # route "resources :posts, module: 'admin' " # works
-        route "resources :posts, module: 'admin' "
 
-        # resources :react_posts, module: :posts
-
-        # route "multi line string" \
-        # "parsed as single line string"
-
-        # route "scope module: #{namespace.to_sym} do"\
-        # " get '' "\
-
-
-        # route "scope module: #{namespace} do"\
-        #       " root to: 'components#root' "\
-        #       "end"
+        # works under route: localhost:3000/react_particles/components/index
+        route "scope module: '#{namespace}' do \n" \
+              "   get 'components/index'\n"\
+              "end\n\n"
 
         Rails.application.reload_routes!
       end
