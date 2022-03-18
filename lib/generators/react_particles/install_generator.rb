@@ -25,12 +25,39 @@ module ReactParticles
         )
       end
 
-      # def run_routes_generator
-      #   # byebug
-      #   if react_application_resources.none?
-      #     call_generator("react_particles:routes", "--namespace", namespace)
-      #     Rails.application.reload_routes!
-      #   end
+      # def create_react_application_routes
+      #   # if react_application_resources.none?
+      #   #   call_generator("react_particles:routes", "--namespace", namespace)
+      #   #   Rails.application.reload_routes!
+      #   # end
+      # end
+
+      def create_react_application_routes
+        # route "resources :people" # works
+        # route "resources :posts, module: 'admin' " # works
+        route "resources :posts, module: 'admin' "
+
+        # resources :react_posts, module: :posts
+
+        # route "multi line string" \
+        # "parsed as single line string"
+
+        # route "scope module: #{namespace.to_sym} do"\
+        # " get '' "\
+
+
+        # route "scope module: #{namespace} do"\
+        #       " root to: 'components#root' "\
+        #       "end"
+
+        Rails.application.reload_routes!
+      end
+
+
+
+
+      # def create_react_application_views
+      #   # code
       # end
 
       private
