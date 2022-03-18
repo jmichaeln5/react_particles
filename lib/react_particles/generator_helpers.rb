@@ -4,6 +4,10 @@ module ReactParticles
       Rails::Generators.invoke(generator, args, generator_options)
     end
 
+    # def call_template(template, *args)
+    #   # code
+    # end
+
     private
 
     def generator_options
