@@ -2,9 +2,9 @@
 # `ReactParticles::ApplicationController`, making it the ideal place to put
 # any logic you want your React application controllers to have.
 #
-# If you want you're free to overwrite the RESTful controller actions.
+# If you want you're free to overwrite the controller actions.
 module <%= namespace.camelize %>
-  class ApplicationController < ReactParticles::ApplicationController
+  class <%= namespace.camelize %>::ApplicationController < ReactParticles::ApplicationController
 
   end
 end

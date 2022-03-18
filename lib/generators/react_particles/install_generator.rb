@@ -6,7 +6,8 @@ module ReactParticles
   module Generators
     class InstallGenerator < Rails::Generators::Base
       include ReactParticles::GeneratorHelpers
-      source_root File.expand_path("../templates", __FILE__)
+      # source_root File.expand_path("../templates", __FILE__) # before
+      source_root File.expand_path("../../templates", __FILE__)
 
       class_option :namespace, type: :string, default: "react_application"
         # e.g. with namespace
