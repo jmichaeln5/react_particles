@@ -32,6 +32,14 @@ module ReactParticles
         )
       end
 
+      def create_default_components_view
+        template(
+          "components_index.rb.erb",
+          "app/views/#{namespace}/components/index.html.erb",
+        )
+      end
+
+
       # def create_react_application_routes
       #   # if react_application_resources.none?
       #   #   call_generator("react_particles:routes", "--namespace", namespace)
