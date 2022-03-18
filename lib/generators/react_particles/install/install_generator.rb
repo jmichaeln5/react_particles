@@ -11,10 +11,13 @@ module ReactParticles
       source_root File.expand_path("../templates", __FILE__)
 
       class_option :namespace, type: :string, default: "react_application"
-      ### Before:
-      ### dashboard_resources
-      ### After:
-      ### react_application_resources
+        # e.g. with namespace
+          # rails g react_particles:install --namespace reakt_app
+          # creates: app/controllers/reakt_app/application_controller.rb
+
+        # e.g. without namespace
+          # rails g react_particles:install
+          # creates: app/controllers/react_application/application_controller.rb
 
       def create_react_application_controller
         template(
