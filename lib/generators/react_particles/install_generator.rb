@@ -25,6 +25,13 @@ module ReactParticles
         )
       end
 
+      def create_default_components_controller
+        template(
+          "components_controller.rb.erb",
+          "app/controllers/#{namespace}/components_controller.rb",
+        )
+      end
+
       # def create_react_application_routes
       #   # if react_application_resources.none?
       #   #   call_generator("react_particles:routes", "--namespace", namespace)
@@ -36,10 +43,23 @@ module ReactParticles
         # route "resources :people" # works
         # route "resources :posts, module: 'admin' " # works
 
-        # works under route: localhost:3000/react_particles/components/index
+        # route "scope #{namespace.to_sym} do \n" \
+        #       "   get 'components/index'\n"\
+        #       "end\n\n"
+
+
+
+        #### works under route: localhost:3000/react_particles/components/index
+        # route "scope module: '#{namespace}' do \n" \
+        #       "   get 'components/index'\n"\
+        #       "end\n\n"
+
+
         route "scope module: '#{namespace}' do \n" \
               "   get 'components/index'\n"\
               "end\n\n"
+
+
 
         Rails.application.reload_routes!
       end
