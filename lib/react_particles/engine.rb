@@ -12,7 +12,7 @@ module ReactParticles
           # 'application.css', # from article
           # 'application.js' # from article
           'react_particles/application.css', # Personally entered
-          # 'react_particles/application.js' # Personally entered
+          'react_particles/application.js' # Personally entered
         ]
     end
   end
