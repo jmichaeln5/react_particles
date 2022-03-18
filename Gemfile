@@ -52,3 +52,4 @@ gem "stimulus-rails"
 
 gem "faker", "~> 2.20"
 gem "byebug"
+gem 'colorize', '~> 0.8.1'

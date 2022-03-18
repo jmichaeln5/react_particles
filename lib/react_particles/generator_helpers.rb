@@ -8,6 +8,10 @@ module ReactParticles
     #   # code
     # end
 
+    def indent_str(strang)
+      return " "*7 + strang + " "
+    end
+
     private
 
     def generator_options
