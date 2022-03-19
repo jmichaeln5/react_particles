@@ -47,6 +47,33 @@ module ReactParticles
 ######################################################################################
 ######################################################################################
 
+
+      # def copy_initializer
+      #   template "react_particles.rb", "config/initializers/react_particles.rb"
+      # end
+
+      def copy_react_particles_initializer
+        react_particles_initializer_template_file = "react_particles.rb"
+        react_particles_initializer_file_path = "config/initializers/react_particles.rb"
+
+        case self.behavior
+        when :invoke
+          template(
+            react_particles_initializer_template_file,
+            react_particles_initializer_file_path,
+          )
+        when :revoke
+          puts indent_str("removed ".red) + react_particles_initializer_file_path.green
+          `rm #{react_particles_initializer_file_path}`
+        end
+      end
+
+
+
+
+
+
+
       # def create_react_application_controller
       #   template(
       #     "application_controller.rb.erb",
