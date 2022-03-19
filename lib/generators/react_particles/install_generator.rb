@@ -52,7 +52,7 @@ module ReactParticles
       #   template "react_particles.rb", "config/initializers/react_particles.rb"
       # end
 
-      def copy_react_particles_initializer
+      def generate_react_particles_initializer
         react_particles_initializer_template_file = "react_particles.rb"
         react_particles_initializer_file_path = "config/initializers/react_particles.rb"
 
@@ -69,8 +69,11 @@ module ReactParticles
       end
 
 
+      def generate_assets
+        call_generator("react_particles:assets:javascripts")
+        call_generator("react_particles:assets:stylesheets")
+      end
 
-      
 
 
 
