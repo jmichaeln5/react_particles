@@ -24,10 +24,15 @@ module ReactParticles
       #   end
       # end
 
-      def copy_assets
-        call_generator("react_particles:assets:javascripts")
-        call_generator("react_particles:assets:stylesheets")
+      def generate_assets
+          call_generator("react_particles:assets:javascripts")
+          call_generator("react_particles:assets:stylesheets")
       end
+
+      # def copy_assets
+      #   call_generator("react_particles:assets:javascripts")
+      #   call_generator("react_particles:assets:stylesheets")
+      # end
 
 
     end

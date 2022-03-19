@@ -11,19 +11,19 @@ module ReactParticles
 
         source_root File.expand_path("../../../../../", __FILE__)
 
-        # def generate_stylesheets
-        #   case self.behavior
-        #   when :invoke
-        #     directory STYLESHEETS_PATH, STYLESHEETS_PATH
-        #   when :revoke
-        #     `rm -rf #{STYLESHEETS_PATH}`
-        #     puts indent_str("removed ".red) + "#{STYLESHEETS_PATH.green}/*"
-        #   end
-        # end
-
-        def copy_stylesheets
-          directory STYLESHEETS_PATH, STYLESHEETS_PATH
+        def generate_stylesheets
+          case self.behavior
+          when :invoke
+            directory STYLESHEETS_PATH, STYLESHEETS_PATH
+          when :revoke
+            `rm -rf #{STYLESHEETS_PATH}`
+            puts indent_str("removed ".red) + "#{STYLESHEETS_PATH.green}/*"
+          end
         end
+
+        # def copy_stylesheets
+        #   directory STYLESHEETS_PATH, STYLESHEETS_PATH
+        # end
 
       end
     end
