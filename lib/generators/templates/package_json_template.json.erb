@@ -1,3 +1,13 @@
 <% require 'json' %>
-<% default_script = {name: "#{namespace}", private: "true" } %>
+<%
+  default_script = {
+    name: "#{namespace}", private: "true",
+      "dependencies": {},
+      "scripts": {
+        build: "esbuild --bundle app/javascript/#{namespace}/*.* --outdir=app/assets/javascripts/#{namespace}/builds", 
+        watch: "esbuild --watch --bundle app/javascript/#{namespace}/*.* --outdir=app/assets/javascripts/#{namespace}/builds"
+      }
+  }
+%>
+
 <%= JSON.pretty_generate(default_script) %>
