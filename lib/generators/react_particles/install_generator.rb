@@ -113,8 +113,6 @@ module ReactParticles
       end
 
 
-
-
       def generate_nested_components_file
         javascript_components_file_path = "app/javascript/#{namespace}/components.jsx"
 
@@ -165,6 +163,23 @@ module ReactParticles
           `rm -rf app/controllers/#{namespace}/`
         end
       end
+
+
+
+      def generate_react_application_layout
+        case self.behavior
+        when :invoke
+          copy_file(
+            "../../../app/views/layouts/react_particles/application.html.erb",
+            "app/views/layouts/#{namespace}/application.html.erb",
+          )
+        when :revoke
+          puts indent_str("removed ".red) + "app/views/layouts/#{namespace}/*".green
+          `rm -rf app/views/layouts/#{namespace}/`
+        end
+      end
+
+
 
       def generate_default_components_controller
         components_controller_template_file = "components_controller.rb.erb"
