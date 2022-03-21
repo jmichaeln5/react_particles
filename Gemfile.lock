@@ -2,6 +2,7 @@ PATH
   remote: .
   specs:
     react_particles (0.1.0)
+      colorize
       rails (>= 7.0)
 
 GEM

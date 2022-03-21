@@ -1,3 +1,6 @@
+require 'rubygems'
+require 'colorize'
+
 module ReactParticles
   class Engine < ::Rails::Engine
     isolate_namespace ReactParticles
