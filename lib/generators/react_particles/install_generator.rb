@@ -79,16 +79,30 @@ module ReactParticles
 
       ############################################################
       ############################################################
+      ############################################################
       #### **************** Adding esbuild and other dependencies
       def generate_javascript_dir
         javascript_dir_path = "app/javascript/#{namespace}"
 
         case self.behavior
         when :invoke
-          `mkdir app/javascript/#{namespace}`
+          `mkdir #{javascript_dir_path}`
         when :revoke
           `rm -rf #{javascript_dir_path}`
           puts indent_str("removed ".red) + "#{javascript_dir_path.green}/*"
+        end
+      end
+
+
+      def generate_nested_components_file
+        javascript_components_file_path = "app/javascript/#{namespace}/components.jsx"
+
+        case self.behavior
+        when :invoke
+          `mkdir #{javascript_components_file_path}`
+        when :revoke
+          `rm -rf #{javascript_components_file_path}`
+          puts indent_str("removed ".red) + "#{javascript_components_file_path.green}"
         end
       end
 
@@ -97,6 +111,7 @@ module ReactParticles
       # end
 
       #### *******************************************************
+      ############################################################
       ############################################################
       ############################################################
 
