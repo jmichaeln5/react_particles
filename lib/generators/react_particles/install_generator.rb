@@ -69,6 +69,7 @@ module ReactParticles
       end
 
 
+
       def generate_assets
         call_generator("react_particles:assets:javascripts")
         call_generator("react_particles:assets:stylesheets")
@@ -76,8 +77,28 @@ module ReactParticles
 
 
 
+      ############################################################
+      ############################################################
+      #### **************** Adding esbuild and other dependencies
+      def generate_javascript_dir
+        javascript_dir_path = "app/javascript/#{namespace}"
 
+        case self.behavior
+        when :invoke
+          `mkdir app/javascript/#{namespace}`
+        when :revoke
+          `rm -rf #{javascript_dir_path}`
+          puts indent_str("removed ".red) + "#{javascript_dir_path.green}/*"
+        end
+      end
 
+      # def generate_namespace_js_dependencies
+      #   # code
+      # end
+
+      #### *******************************************************
+      ############################################################
+      ############################################################
 
 
 
