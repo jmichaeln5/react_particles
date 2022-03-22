@@ -113,7 +113,6 @@ module ReactParticles
         react_application_package_json_template_file = "package_json_template.json.erb"
         generated_react_application_package_json_file_path = "#{javascript_dir_path}/package.json"
 
-
         case self.behavior
         when :invoke
           template(
@@ -128,16 +127,28 @@ module ReactParticles
 
 
       def generate_nested_components_file
-        javascript_components_file_path = "app/javascript/#{namespace}/components.jsx"
+        # javascript_components_file_path = "app/javascript/#{namespace}/components.jsx"
+
+        javascript_components_file_path = "app/assets/javascripts/#{namespace}/application.js"
+
 
         case self.behavior
         when :invoke
-          `touch #{javascript_components_file_path}`
+          template(
+            "component_template.js.erb",
+            javascript_components_file_path,
+          )
         when :revoke
-          `rm -rf #{javascript_components_file_path}`
           puts indent_str("removed ".red) + "#{javascript_components_file_path.green}"
+          `rm #{javascript_components_file_path}`
         end
       end
+
+
+
+
+
+
 
       def generate_react_particles_manifest_js
         react_particles_manifest_path = "app/assets/config/react_particles_manifest.js"
