@@ -70,7 +70,7 @@ module ReactParticles
 
 
       def generate_assets
-        call_generator("react_particles:assets:javascripts")
+        # call_generator("react_particles:assets:javascripts")
         call_generator("react_particles:assets:stylesheets")
       end
 
@@ -80,7 +80,6 @@ module ReactParticles
       ############################################################
       ############################################################
       #### **************** Adding esbuild and other dependencies
-
 
       def generate_namespaced_javascript_dir
         javascript_dir_path = "app/javascript/#{namespace}"
@@ -102,7 +101,7 @@ module ReactParticles
         when :invoke
           `touch #{javascript_application_js_file_in_js_dir}`
         when :revoke
-          `rm -rf #{javascript_dir_path}`
+          `rm -rf app/javascript/#{namespace}`
           puts indent_str("removed ".red) + "#{javascript_dir_path.green}/*"
         end
       end
@@ -127,11 +126,9 @@ module ReactParticles
 
 
       def generate_nested_components_file
-        # javascript_components_file_path = "app/javascript/#{namespace}/components.jsx"
-
-        javascript_components_file_path = "app/assets/javascripts/#{namespace}/application.js"
-
-
+        javascript_dir_path = "app/javascript/#{namespace}"
+        javascript_components_file_path = "#{javascript_dir_path}/components.jsx"
+        # javascript_components_file_path = "app/assets/javascripts/#{namespace}/application.js"
         case self.behavior
         when :invoke
           template(
@@ -150,55 +147,79 @@ module ReactParticles
 
 
 
-      def generate_react_particles_manifest_js
-        react_particles_manifest_path = "app/assets/config/react_particles_manifest.js"
-        case self.behavior
-        when :invoke
-          `touch #{react_particles_manifest_path}`
-        when :revoke
-          `rm #{react_particles_manifest_path}`
-          puts indent_str("removed ".red) + "#{react_particles_manifest_path.green}/*"
-        end
-      end
+
+
+
 
       def generate_react_particles_builds_dir
-        react_particles_builds_dir = "app/assets/javascripts/react_particles/builds"
-        react_particles_builds_path = "app/assets/react_particles/builds"
+        javascript_dir_path = "app/javascript/#{namespace}"
+
+        # javascript_asset_dir_path = "app/javascripts/#{namespace}"
+        # react_particles_builds_dir = "app/assets/javascripts/react_particles/builds"
+
+        ##### SAME AS IN: lib/generators/templates/package_json_template.json.erb vvvv
+        ##### SAME AS IN: lib/generators/templates/package_json_template.json.erb vvvv
+        ##### SAME AS IN: lib/generators/templates/package_json_template.json.erb vvvv
+        react_particles_builds_dir = "app/assets/react_particles/builds" ####    ^^^^
 
         case self.behavior
         when :invoke
-          say "Creating react_particles_builds dir #{react_particles_builds_path}"
+          say "Creating react_particles_builds dir #{react_particles_builds_dir}"
 
           `mkdir #{react_particles_builds_dir}`
 
-          say "Compile into #{react_particles_builds_path}"
-          empty_directory "#{react_particles_builds_path}"
-          `touch #{react_particles_builds_path}/.keep`
+          say "Compile into #{react_particles_builds_dir}"
+          empty_directory "#{react_particles_builds_dir}"
+          `touch #{react_particles_builds_dir}/.keep`
 
-          if (sprockets_manifest_path = Rails.root.join("app/assets/config/react_particles_manifest.js")).exist?
-            append_to_file sprockets_manifest_path, %(//= link_tree ../javascripts/react_particles/builds\n)
-          end
+          # append_to_gitignore("/app/assets/react_particles/builds/*")
+          # append_to_gitignore("!/app/assets/react_particles/builds/.keep")
+          # append_to_gitignore("app/javascript/react_application/node_modules/*")
 
-          if Rails.root.join(".gitignore").exist?
-            append_to_file(".gitignore", %(\n/app/assets/react_particles/builds/*\n!/app/assets/react_particles/builds/.keep\n))
+          append_to_gitignore("/#{react_particles_builds_dir}/*")
+          append_to_gitignore("!/#{react_particles_builds_dir}/.keep")
+          append_to_gitignore("#{javascript_dir_path}/node_modules/*")
 
-            react_particles_node_modules_root_path = "app/javascript/react_application/node_modules"
-
-            if (react_particles_node_modules = Rails.root.join("#{react_particles_node_modules_root_path}")).exist?
-              append_to_file(".gitignore", %(\n/#{react_particles_node_modules_root_path}\n))
-            end
-          end
 
         when :revoke
-          puts indent_str("removed ".red) + "#{react_particles_builds_path.green}"
+          puts indent_str("removed ".red) + "#{react_particles_builds_dir.green}"
           `rm -rf app/assets/react_particles/`
         end
       end
 
 
+
+
+
+
+
+
+      def generate_react_particles_manifest_js
+        # react_particles_manifest_path = "app/assets/#{namespace}/config/react_particles_manifest.js"
+        react_particles_manifest_path = "app/assets/config/react_particles_manifest.js"
+
+
+        case self.behavior
+        when :invoke
+          `touch #{react_particles_manifest_path}`
+        when :revoke
+          `rm #{react_particles_manifest_path}`
+          puts indent_str("removed ".red) + "#{react_particles_manifest_path.green}"
+        end
+
+        if (sprockets_manifest_path = Rails.root.join(react_particles_manifest_path)).exist?
+          # append_to_file sprockets_manifest_path, %(//= link_tree ../javascripts/react_particles/builds\n)
+          append_to_file sprockets_manifest_path, %(//= link_tree ../react_particles/builds\n)
+        end
+
+      end
+
+
+
       def install_react_es_build_with_yarn
         javascript_dir_path = "app/javascript/#{namespace}"
-        generated_react_application_package_json_file_path = "app/javascript/#{namespace}/package.json"
+        # generated_react_application_package_json_file_path = "app/javascript/#{namespace}/package.json"
+        generated_react_application_package_json_file_path = "#{javascript_dir_path}/package.json"
 
         case self.behavior
         when :invoke
@@ -209,11 +230,6 @@ module ReactParticles
           end
         when :revoke
           if ( generated_json_file_path = Rails.root.join(generated_react_application_package_json_file_path)).exist?
-            Dir.chdir "#{javascript_dir_path}" do
-                system 'yarn add react react-dom esbuild'
-            end
-          else
-            `mkdir #{javascript_dir_path}`
             Dir.chdir "#{javascript_dir_path}" do
                 system 'yarn remove react react-dom esbuild'
             end
@@ -333,6 +349,15 @@ module ReactParticles
 
       def namespace
         options[:namespace]
+      end
+
+      def append_to_gitignore(file)
+        if Rails.root.join(".gitignore").exist?
+          append_to_file(".gitignore", "\n #{file} \n")
+        else
+          system "touch .gitignore"
+          append_to_file(".gitignore", "\n #{file} \n")
+        end
       end
 
       def singular_react_application_resources
