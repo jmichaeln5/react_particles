@@ -1,0 +1,6 @@
+
+ /app/assets/react_particles/builds/* 
+
+ !/app/assets/react_particles/builds/.keep 
+
+ app/javascript/react_application/node_modules/* 

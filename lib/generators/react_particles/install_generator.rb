@@ -100,6 +100,7 @@ module ReactParticles
         case self.behavior
         when :invoke
           `touch #{javascript_application_js_file_in_js_dir}`
+            append_to_file(javascript_application_js_file_in_js_dir, "import './components.jsx' \n")
         when :revoke
           `rm -rf app/javascript/#{namespace}`
           puts indent_str("removed ".red) + "#{javascript_dir_path.green}/*"
