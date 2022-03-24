@@ -13,3 +13,7 @@
  *= require_tree .
  *= require_self
  */
+
+.test-react-particles {
+  color: #62DAFB;
+}

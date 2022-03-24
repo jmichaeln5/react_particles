@@ -2,6 +2,7 @@ PATH
   remote: .
   specs:
     react_particles (0.1.0)
+      colorize
       rails (>= 7.0)
 
 GEM
@@ -74,6 +75,7 @@ GEM
       tzinfo (~> 2.0)
     builder (3.2.4)
     byebug (11.1.3)
+    colorize (0.8.1)
     concurrent-ruby (1.1.9)
     crass (1.0.6)
     digest (3.1.0)
@@ -172,10 +174,12 @@ GEM
     zeitwerk (2.5.4)
 
 PLATFORMS
+  x86_64-darwin-17
   x86_64-darwin-19
 
 DEPENDENCIES
   byebug
+  colorize (~> 0.8.1)
   faker (~> 2.20)
   importmap-rails (~> 1.0)
   pg (~> 1.1)
