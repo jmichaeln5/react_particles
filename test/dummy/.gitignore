@@ -1,0 +1,9 @@
+/db/*.sqlite3
+/db/*.sqlite3-*
+/log/*.log
+/storage/
+/tmp/
+/public/assets/
+/.byebug_history
+/.DS_Store
+/.byebug_history

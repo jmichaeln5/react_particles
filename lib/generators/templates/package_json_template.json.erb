@@ -4,8 +4,8 @@
     name: "#{namespace}", private: "true",
       "dependencies": {},
       "scripts": {
-        build: "esbuild --bundle app/javascript/#{namespace}/*.* --outdir=app/assets/react_particles/builds",
-        watch: "esbuild --watch --bundle app/javascript/#{namespace}/*.* --outdir=app/assets/react_particles/builds"
+        build: "esbuild --bundle ./application.js --outfile=../../assets/javascripts/react_particles/application.js",
+        watch: "esbuild --watch --bundle ./application.js --outfile=../../assets/javascripts/react_particles/application.js"
       }
   }
 %>
