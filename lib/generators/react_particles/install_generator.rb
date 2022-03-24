@@ -18,40 +18,6 @@ module ReactParticles
           # rails g react_particles:install
           # creates: app/controllers/react_application/application_controller.rb
 
-#########################################################
-#########################################################
-####### How to reverse a 'rails generate' ***************
-####### https://stackoverflow.com/questions/4161357/how-to-reverse-a-rails-generate
-
-####### It's worth mentioning the -p flag here ("p" for pretend)
-#######     If you add this to the command it will simply do a
-#######    "test" run and show you what files will be deleted
-#######     without actually deleting them.
-#########################################################
-#########################################################
-
-
-######################################################################################
-######################################################################################
-####### Rails generator not removing newly created folders on destroy ***************
-####### https://stackoverflow.com/questions/52881285/rails-generator-not-removing-newly-created-folders-on-destroy
-
-####### def generate_directory
-#######   case self.behavior
-#######   when :invoke
-#######     `mkdir path/to/directory`
-#######   when :revoke
-#######     `rm -rf path/to/directory`
-#######   end
-####### end
-######################################################################################
-######################################################################################
-
-
-      # def copy_initializer
-      #   template "react_particles.rb", "config/initializers/react_particles.rb"
-      # end
-
       def generate_react_particles_initializer
         react_particles_initializer_template_file = "react_particles.rb"
         react_particles_initializer_file_path = "config/initializers/react_particles.rb"
@@ -68,19 +34,58 @@ module ReactParticles
         end
       end
 
-
       def generate_assets
         # call_generator("react_particles:assets:javascripts")
         call_generator("react_particles:assets:stylesheets")
       end
 
+      ############################################################
+      ################## **************** ReactParticles JS ASSETS
+      ASSETS_JAVASCRIPTS_DIR_PATH = "app/assets/javascripts/react_particles"
+      def generate_react_particles_assets_javascripts_dir
+         case self.behavior
+         when :invoke
+           say "Creating react_particles javascripts directory, entry point for Engine's Asset Pipeline"
+           `mkdir #{ASSETS_JAVASCRIPTS_DIR_PATH}`
+         when :revoke
+           say "Removing react_particles javascripts entry point for Asset Pipeline"
+           `rm -rf #{ASSETS_JAVASCRIPTS_DIR_PATH}`
+         end
+      end
+
+      ASSETS_JAVASCRIPTS_APP_JS_FILE_PATH = ASSETS_JAVASCRIPTS_DIR_PATH + "/application.js"
+      def generate_react_particles_assets_javascripts_application_js
+         case self.behavior
+         when :invoke
+           say "Creating react_particles javascripts application.js file, entry point for Engine's Asset Pipeline"
+           `touch #{ASSETS_JAVASCRIPTS_APP_JS_FILE_PATH}`
+         when :revoke
+           say "Removing react_particles javascripts application.js file"
+           `rm #{ASSETS_JAVASCRIPTS_APP_JS_FILE_PATH}`
+         end
+      end
+
+      ASSETS_CONFIG_MANIFEST_FILE_PATH = "app/assets/config/react_particles_manifest.js"
+      def generate_react_particles_assets_manifest_js
+        case self.behavior
+        when :invoke
+          say "Creating react_particles javascripts react_particles_manifest.js file, entry point for Engine's Asset Pipeline"
+          `mkdir app/assets/config`
+          `touch #{ASSETS_CONFIG_MANIFEST_FILE_PATH}`
+        when :revoke
+          `rm #{ASSETS_CONFIG_MANIFEST_FILE_PATH}`
+          puts indent_str("removed ".red) + "#{ASSETS_CONFIG_MANIFEST_FILE_PATH.green}"
+        end
+        if (sprockets_manifest_path = Rails.root.join(ASSETS_CONFIG_MANIFEST_FILE_PATH)).exist?
+          append_to_file sprockets_manifest_path, %(//= link_tree ../javascripts/react_particles\n)
+        end
+      end
+      ################## *****************************************
+      ############################################################
 
 
-      ############################################################
-      ############################################################
       ############################################################
       #### **************** Adding esbuild and other dependencies
-
       def generate_namespaced_javascript_dir
         javascript_dir_path = "app/javascript/#{namespace}"
 
@@ -95,6 +100,7 @@ module ReactParticles
 
       def generate_namespaced_application_js_in_javascript_dir
         javascript_dir_path = "app/javascript/#{namespace}"
+
         javascript_application_js_file_in_js_dir = "app/javascript/#{namespace}/application.js"
 
         case self.behavior
@@ -102,7 +108,7 @@ module ReactParticles
           `touch #{javascript_application_js_file_in_js_dir}`
             append_to_file(javascript_application_js_file_in_js_dir, "import './components.jsx' \n")
         when :revoke
-          `rm -rf app/javascript/#{namespace}`
+          `rm -rf #{javascript_dir_path}`
           puts indent_str("removed ".red) + "#{javascript_dir_path.green}/*"
         end
       end
@@ -121,15 +127,13 @@ module ReactParticles
           )
         when :revoke
           puts indent_str("removed ".red) + generated_react_application_package_json_file_path.green
-          `rm -rf #{generated_react_application_package_json_file_path}`
+          `rm -rf #{javascript_dir_path}`
         end
       end
 
-
-      def generate_nested_components_file
+      def generate_components_file
         javascript_dir_path = "app/javascript/#{namespace}"
         javascript_components_file_path = "#{javascript_dir_path}/components.jsx"
-        # javascript_components_file_path = "app/assets/javascripts/#{namespace}/application.js"
         case self.behavior
         when :invoke
           template(
@@ -138,88 +142,12 @@ module ReactParticles
           )
         when :revoke
           puts indent_str("removed ".red) + "#{javascript_components_file_path.green}"
-          `rm #{javascript_components_file_path}`
+          `rm -rf #{javascript_dir_path}`
         end
       end
-
-
-
-
-
-
-
-
-
-
-
-      def generate_react_particles_builds_dir
-        javascript_dir_path = "app/javascript/#{namespace}"
-
-        # javascript_asset_dir_path = "app/javascripts/#{namespace}"
-        # react_particles_builds_dir = "app/assets/javascripts/react_particles/builds"
-
-        ##### SAME AS IN: lib/generators/templates/package_json_template.json.erb vvvv
-        ##### SAME AS IN: lib/generators/templates/package_json_template.json.erb vvvv
-        ##### SAME AS IN: lib/generators/templates/package_json_template.json.erb vvvv
-        react_particles_builds_dir = "app/assets/react_particles/builds" ####    ^^^^
-
-        case self.behavior
-        when :invoke
-          say "Creating react_particles_builds dir #{react_particles_builds_dir}"
-
-          `mkdir #{react_particles_builds_dir}`
-
-          say "Compile into #{react_particles_builds_dir}"
-          empty_directory "#{react_particles_builds_dir}"
-          `touch #{react_particles_builds_dir}/.keep`
-
-          # append_to_gitignore("/app/assets/react_particles/builds/*")
-          # append_to_gitignore("!/app/assets/react_particles/builds/.keep")
-          # append_to_gitignore("app/javascript/react_application/node_modules/*")
-
-          append_to_gitignore("/#{react_particles_builds_dir}/*")
-          append_to_gitignore("!/#{react_particles_builds_dir}/.keep")
-          append_to_gitignore("#{javascript_dir_path}/node_modules/*")
-
-
-        when :revoke
-          puts indent_str("removed ".red) + "#{react_particles_builds_dir.green}"
-          `rm -rf app/assets/react_particles/`
-        end
-      end
-
-
-
-
-
-
-
-
-      def generate_react_particles_manifest_js
-        # react_particles_manifest_path = "app/assets/#{namespace}/config/react_particles_manifest.js"
-        react_particles_manifest_path = "app/assets/config/react_particles_manifest.js"
-
-
-        case self.behavior
-        when :invoke
-          `touch #{react_particles_manifest_path}`
-        when :revoke
-          `rm #{react_particles_manifest_path}`
-          puts indent_str("removed ".red) + "#{react_particles_manifest_path.green}"
-        end
-
-        if (sprockets_manifest_path = Rails.root.join(react_particles_manifest_path)).exist?
-          # append_to_file sprockets_manifest_path, %(//= link_tree ../javascripts/react_particles/builds\n)
-          append_to_file sprockets_manifest_path, %(//= link_tree ../react_particles/builds\n)
-        end
-
-      end
-
-
 
       def install_react_es_build_with_yarn
         javascript_dir_path = "app/javascript/#{namespace}"
-        # generated_react_application_package_json_file_path = "app/javascript/#{namespace}/package.json"
         generated_react_application_package_json_file_path = "#{javascript_dir_path}/package.json"
 
         case self.behavior
@@ -239,24 +167,31 @@ module ReactParticles
         end
       end
 
-
-      #### *******************************************************
+      def add_node_modules_to_git_ignore
+        react_particles_node_modules = "/app/javascript/#{namespace}/node_modules"
+        removed_react_particles_node_modules_path = "app/javascript/___namespace___/node_modules"
+        case self.behavior
+        when :invoke
+          if Rails.root.join(".gitignore").exist?
+            append_to_gitignore("#{react_particles_node_modules}/*")
+          else
+            system "touch .gitignore"
+            append_to_gitignore("#{react_particles_node_modules}/*")
+          end
+        when :revoke
+          puts "\n"
+          puts "*"*50
+          puts "*"*50
+          puts "\n"
+          puts "#{removed_react_particles_node_modules_path} removed, please remove reference of file in .gitignore"
+          puts "\n"
+          puts "*"*50
+          puts "*"*50
+          puts "\n"
+        end
+      end
+      ################## *****************************************
       ############################################################
-      ############################################################
-      ############################################################
-
-
-
-
-
-
-
-      # def create_react_application_controller
-      #   template(
-      #     "application_controller.rb.erb",
-      #     "app/controllers/#{namespace}/application_controller.rb",
-      #   )
-      # end
 
       def generate_react_application_controller
         react_application_controller_template_file = "application_controller.rb.erb"
@@ -275,8 +210,6 @@ module ReactParticles
         end
       end
 
-
-
       def generate_react_application_layout
         case self.behavior
         when :invoke
@@ -290,8 +223,6 @@ module ReactParticles
         end
       end
 
-
-
       def generate_default_components_controller
         components_controller_template_file = "components_controller.rb.erb"
         generated_components_controller_file_path = "app/controllers/#{namespace}/components_controller.rb"
@@ -304,7 +235,7 @@ module ReactParticles
           )
         when :revoke
           puts indent_str("removed ".red) + generated_components_controller_file_path.green
-          `rm -rf path/to/directory`
+          `rm -rf app/controllers/#{namespace}`
         end
       end
 
@@ -323,13 +254,6 @@ module ReactParticles
           `rm -rf app/views/#{namespace}/`
         end
       end
-
-      # def create_react_application_routes
-      #   # if react_application_resources.none?
-      #   #   call_generator("react_particles:routes", "--namespace", namespace)
-      #   #   Rails.application.reload_routes!
-      #   # end
-      # end
 
       def generate_react_application_routes
         react_application_routes =  "scope module: '#{namespace}' do \n" \
@@ -368,7 +292,6 @@ module ReactParticles
       def react_application_resources
         ReactParticles::Namespace.new(namespace).resources
       end
-
     end
   end
 end
