@@ -94,7 +94,7 @@ module ReactParticles
         case self.behavior
         when :invoke
           if Rails.root.join(".gitignore").exist?
-            append_to_gitignore("#{react_particles_node_modules}/*")
+            append_to_gitignore("/#{react_particles_node_modules}/*")
           else
             system "touch .gitignore"
             append_to_gitignore("#{react_particles_node_modules}/*")
