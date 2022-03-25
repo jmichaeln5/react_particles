@@ -35,54 +35,9 @@ module ReactParticles
       end
 
       def generate_assets
-        # call_generator("react_particles:assets:javascripts")
+        call_generator("react_particles:assets:javascripts")
         call_generator("react_particles:assets:stylesheets")
       end
-
-      ############################################################
-      ################## **************** ReactParticles JS ASSETS
-      ASSETS_JAVASCRIPTS_DIR_PATH = "app/assets/javascripts/react_particles"
-      def generate_react_particles_assets_javascripts_dir
-         case self.behavior
-         when :invoke
-           say "Creating react_particles javascripts directory, entry point for Engine's Asset Pipeline"
-           `mkdir #{ASSETS_JAVASCRIPTS_DIR_PATH}`
-         when :revoke
-           say "Removing react_particles javascripts entry point for Asset Pipeline"
-           `rm -rf #{ASSETS_JAVASCRIPTS_DIR_PATH}`
-         end
-      end
-
-      ASSETS_JAVASCRIPTS_APP_JS_FILE_PATH = ASSETS_JAVASCRIPTS_DIR_PATH + "/application.js"
-      def generate_react_particles_assets_javascripts_application_js
-         case self.behavior
-         when :invoke
-           say "Creating react_particles javascripts application.js file, entry point for Engine's Asset Pipeline"
-           `touch #{ASSETS_JAVASCRIPTS_APP_JS_FILE_PATH}`
-         when :revoke
-           say "Removing react_particles javascripts application.js file"
-           `rm #{ASSETS_JAVASCRIPTS_APP_JS_FILE_PATH}`
-         end
-      end
-
-      ASSETS_CONFIG_MANIFEST_FILE_PATH = "app/assets/config/react_particles_manifest.js"
-      def generate_react_particles_assets_manifest_js
-        case self.behavior
-        when :invoke
-          say "Creating react_particles javascripts react_particles_manifest.js file, entry point for Engine's Asset Pipeline"
-          `mkdir app/assets/config`
-          `touch #{ASSETS_CONFIG_MANIFEST_FILE_PATH}`
-        when :revoke
-          `rm #{ASSETS_CONFIG_MANIFEST_FILE_PATH}`
-          puts indent_str("removed ".red) + "#{ASSETS_CONFIG_MANIFEST_FILE_PATH.green}"
-        end
-        if (sprockets_manifest_path = Rails.root.join(ASSETS_CONFIG_MANIFEST_FILE_PATH)).exist?
-          append_to_file sprockets_manifest_path, %(//= link_tree ../javascripts/react_particles\n)
-        end
-      end
-      ################## *****************************************
-      ############################################################
-
 
       ############################################################
       #### **************** Adding esbuild and other dependencies
@@ -180,13 +135,11 @@ module ReactParticles
           end
         when :revoke
           puts "\n"
-          puts "*"*50
-          puts "*"*50
-          puts "\n"
-          puts "#{removed_react_particles_node_modules_path} removed, please remove reference of file in .gitignore"
-          puts "\n"
-          puts "*"*50
-          puts "*"*50
+          3.times do puts "*"*50 end
+          say "The following files/dirs have been removed:\n\n"
+          puts indent_str("#{removed_react_particles_node_modules_path}".green)
+          say "\nPlease remove any reference to them in .gitignore file:\n"
+          3.times do puts "*"*50 end
           puts "\n"
         end
       end
