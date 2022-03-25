@@ -42,8 +42,6 @@ module ReactParticles
       ############################################################
       #### **************** Adding esbuild and other dependencies
       def generate_namespaced_javascript_dir
-        javascript_dir_path = "app/javascript/#{namespace}"
-
         case self.behavior
         when :invoke
           `mkdir #{javascript_dir_path}`
@@ -54,8 +52,6 @@ module ReactParticles
       end
 
       def generate_namespaced_application_js_in_javascript_dir
-        javascript_dir_path = "app/javascript/#{namespace}"
-
         javascript_application_js_file_in_js_dir = "app/javascript/#{namespace}/application.js"
 
         case self.behavior
@@ -69,8 +65,6 @@ module ReactParticles
       end
 
       def generate_package_json_file_in_namespaced_javascript_dir
-        javascript_dir_path = "app/javascript/#{namespace}"
-
         react_application_package_json_template_file = "package_json_template.json.erb"
         generated_react_application_package_json_file_path = "#{javascript_dir_path}/package.json"
 
@@ -87,7 +81,6 @@ module ReactParticles
       end
 
       def generate_components_file
-        javascript_dir_path = "app/javascript/#{namespace}"
         javascript_components_file_path = "#{javascript_dir_path}/components.jsx"
         case self.behavior
         when :invoke
@@ -102,7 +95,6 @@ module ReactParticles
       end
 
       def install_react_es_build_with_yarn
-        javascript_dir_path = "app/javascript/#{namespace}"
         generated_react_application_package_json_file_path = "#{javascript_dir_path}/package.json"
 
         case self.behavior
@@ -227,6 +219,10 @@ module ReactParticles
 
       def namespace
         options[:namespace]
+      end
+
+      def javascript_dir_path
+        javascript_dir_path = "app/javascript/#{namespace}"
       end
 
       def append_to_gitignore(file)
