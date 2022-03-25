@@ -29,14 +29,13 @@ module ReactParticles
             react_particles_initializer_file_path,
           )
         when :revoke
-          puts indent_str("removed ".red) + react_particles_initializer_file_path.green
+          puts indent_str("\nremoved ".red) + react_particles_initializer_file_path.green + "\n"
           `rm #{react_particles_initializer_file_path}`
         end
       end
 
-      def generate_assets
-        call_generator("react_particles:assets:javascripts")
-        call_generator("react_particles:assets:stylesheets")
+      def run_assets_generator
+        call_generator("react_particles:assets")
       end
 
       ############################################################
@@ -102,6 +101,7 @@ module ReactParticles
           if ( generated_json_file_path = Rails.root.join(generated_react_application_package_json_file_path)).exist?
             Dir.chdir "#{javascript_dir_path}" do
                 system 'yarn add react react-dom esbuild'
+                system 'yarn run build'
             end
           end
         when :revoke
