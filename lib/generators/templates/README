@@ -6,23 +6,25 @@ Some notes before you get started:
 
   ***** ADDING NEW COMPONENTS *****
 
-  After creating new components import them into the previously mentioned javascript directory
+  When creating a new component import it into the newly generated JavaScript directory
 
-  app/javascript/react_application/application.js
+    app/javascript/react_application/application.js
 
-  or
+    or
 
-  app/javascript/___NAMESPACE___/application.js
+    app/javascript/___NAMESPACE___/application.js
 
-  You can do this by using exact paths to your new components
+  Import new components using relative paths
   For example:
 
-    import './my_new_component.jsx'
+    import './new_component.jsx'
+    import './components/another_new_component.jsx'
+
 
 =================================================================================================
 
   ***** DISPLAYING CHANGES *****
-  
+
   Your JavaScript assets were bundled initially when running react_particles:install but,
 
   you MUST bundle your JavaScript AND precompile your assets after changes are made.
