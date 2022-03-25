@@ -38,6 +38,19 @@ module ReactParticles
         call_generator("react_particles:assets")
       end
 
+
+
+      ############################################################
+      ############################################################
+      ############################################################
+
+      # def run_dashboard_generators
+      #   singular_dashboard_resources.each do |resource|
+      #     call_generator "administrate:dashboard", resource,
+      #       "--namespace", namespace
+      #   end
+      # end
+
       ############################################################
       #### **************** Adding esbuild and other dependencies
       def generate_namespaced_javascript_dir
@@ -115,7 +128,8 @@ module ReactParticles
       end
 
       def add_node_modules_to_git_ignore
-        react_particles_node_modules = "/app/javascript/#{namespace}/node_modules"
+        react_particles_node_modules = "#{javascript_dir_path}/node_modules"
+
         removed_react_particles_node_modules_path = "app/javascript/___namespace___/node_modules"
         case self.behavior
         when :invoke
