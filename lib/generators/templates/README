@@ -1,0 +1,49 @@
+=================================================================================================
+
+Some notes before you get started:
+
+=================================================================================================
+
+  ***** ADDING NEW COMPONENTS *****
+
+  When creating a new component import it into the newly generated JavaScript directory
+
+    app/javascript/react_application/application.js
+
+    or
+
+    app/javascript/___NAMESPACE___/application.js
+
+  Import new components using relative paths
+  For example:
+
+    import './new_component.jsx'
+    import './components/another_new_component.jsx'
+
+
+=================================================================================================
+
+  ***** DISPLAYING CHANGES *****
+
+  Your JavaScript assets were bundled initially when running react_particles:install but,
+
+  you MUST bundle your JavaScript AND precompile your assets after changes are made.
+
+  If updates will not be displayed. So don't forget to do so before spinning up your server.
+
+  To do this cd into the new JavaScript directory (app/javascript/react_application)
+
+  Then run:
+    $ yarn run build
+
+    $ rake assets:precompile
+
+  Finally:
+
+    $ rails s
+
+  Feel free to use an alias for productivity
+
+    $ alias react-particles-start='yarn run build && rake assets:precompile && rails s'
+
+=================================================================================================
