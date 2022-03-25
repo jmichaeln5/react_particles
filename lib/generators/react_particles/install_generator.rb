@@ -118,6 +118,10 @@ module ReactParticles
         Rails.application.reload_routes!
       end
 
+      def show_readme
+        readme "README" if behavior == :invoke
+      end
+
       private
 
       def namespace

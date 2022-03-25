@@ -101,7 +101,7 @@ module ReactParticles
           3.times do puts "*"*50 end
           say "The following files/dirs have been removed:\n\n"
           puts indent_str("#{removed_react_particles_node_modules_path}".green)
-          say "\nPlease remove any reference to them in .gitignore file:\n"
+          say "\nPlease remove any reference to them in .gitignore file\n"
           3.times do puts "*"*50 end
           puts "\n"
         end
