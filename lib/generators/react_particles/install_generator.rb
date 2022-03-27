@@ -28,7 +28,7 @@ module ReactParticles
             react_particles_initializer_file_path,
           )
         when :revoke
-          puts indent_str("\nremoved ".red) + react_particles_initializer_file_path.green + "\n"
+          puts indent_str("\nremoved ".red) + react_particles_initializer_file_path + "\n"
           `rm #{react_particles_initializer_file_path}`
         end
       end
@@ -37,8 +37,8 @@ module ReactParticles
         call_generator("react_particles:assets")
       end
 
-      def run_install_react_generator
-        call_generator("react_particles:install_react", "--namespace", namespace)
+      def run_react_generator
+        call_generator("react_particles:react", "--namespace", namespace)
       end
 
       def generate_react_application_controller
@@ -52,8 +52,8 @@ module ReactParticles
             generated_react_application_controller_file_path,
           )
         when :revoke
-          puts indent_str("removed ".red) + "app/controllers/#{namespace}/*".green
-          puts indent_str("removed ".red) + generated_react_application_controller_file_path.green
+          puts indent_str("removed ".red) + "app/controllers/#{namespace}/*"
+          puts indent_str("removed ".red) + generated_react_application_controller_file_path
           `rm -rf app/controllers/#{namespace}/`
         end
       end
@@ -66,7 +66,7 @@ module ReactParticles
             "app/views/layouts/#{namespace}/application.html.erb",
           )
         when :revoke
-          puts indent_str("removed ".red) + "app/views/layouts/#{namespace}/*".green
+          puts indent_str("removed ".red) + "app/views/layouts/#{namespace}/*"
           `rm -rf app/views/layouts/#{namespace}/`
         end
       end
@@ -82,7 +82,7 @@ module ReactParticles
             generated_components_controller_file_path,
           )
         when :revoke
-          puts indent_str("removed ".red) + generated_components_controller_file_path.green
+          puts indent_str("removed ".red) + generated_components_controller_file_path
           `rm -rf app/controllers/#{namespace}`
         end
       end
@@ -98,7 +98,7 @@ module ReactParticles
             generated_components_view_file_path,
           )
         when :revoke
-          puts indent_str("removed ".red) + components_view_template_file.green
+          puts indent_str("removed ".red) + components_view_template_file
           `rm -rf app/views/#{namespace}/`
         end
       end

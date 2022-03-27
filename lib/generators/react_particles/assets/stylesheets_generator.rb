@@ -17,7 +17,7 @@ module ReactParticles
             directory STYLESHEETS_PATH, STYLESHEETS_PATH
           when :revoke
             `rm -rf #{STYLESHEETS_PATH}`
-            puts indent_str("removed ".red) + "#{STYLESHEETS_PATH.green}/*"
+            puts indent_str("removed ".red) + "#{STYLESHEETS_PATH}/*"
           end
         end
 

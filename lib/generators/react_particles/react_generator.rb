@@ -4,7 +4,7 @@ require "react_particles/namespace"
 
 module ReactParticles
   module Generators
-    class InstallReactGenerator < Rails::Generators::Base
+    class ReactGenerator < Rails::Generators::Base
       include ReactParticles::GeneratorHelpers
       source_root File.expand_path("../../templates", __FILE__)
 
@@ -16,7 +16,7 @@ module ReactParticles
           `mkdir #{javascript_dir_path}`
         when :revoke
           `rm -rf #{javascript_dir_path}`
-          puts indent_str("removed ".red) + "#{javascript_dir_path.green}/*"
+          puts indent_str("removed ".red) + "#{javascript_dir_path}/*"
         end
       end
 
@@ -30,7 +30,7 @@ module ReactParticles
             append_to_file(javascript_application_js_file_in_js_dir, "import './components/index.jsx' \n")
         when :revoke
           `rm -rf #{javascript_dir_path}`
-          puts indent_str("removed ".red) + "#{javascript_dir_path.green}/*"
+          puts indent_str("removed ".red) + "#{javascript_dir_path}/*"
         end
       end
 
@@ -45,7 +45,7 @@ module ReactParticles
             generated_react_application_package_json_file_path,
           )
         when :revoke
-          puts indent_str("removed ".red) + generated_react_application_package_json_file_path.green
+          puts indent_str("removed ".red) + generated_react_application_package_json_file_path
           `rm -rf #{javascript_dir_path}`
         end
       end
@@ -61,7 +61,7 @@ module ReactParticles
             javascript_components_file_path,
           )
         when :revoke
-          puts indent_str("removed ".red) + "#{javascript_components_file_path.green}"
+          puts indent_str("removed ".red) + "#{javascript_components_file_path}"
           `rm -rf #{javascript_dir_path}`
         end
       end
@@ -109,6 +109,11 @@ module ReactParticles
           puts "\n"
         end
       end
+
+      def run_react_src_generator
+        call_generator("react_particles:react:src", "--namespace", namespace)
+      end
+
 
       private
 
