@@ -31,7 +31,7 @@ module ReactParticles
             ################################## Adds src to application.js to get bundled
             ################################## Adds src to application.js to get bundled
             ################################## Adds src to application.js to get bundled
-            # append_to_file(javascript_application_js_file_in_js_dir, "import './src/index.jsx' \n") 
+            append_to_file(javascript_application_js_file_in_js_dir, "import './src/index.jsx' \n")
             ##################################
             ##################################
             ##################################
