@@ -121,6 +121,7 @@ module ReactParticles
 
         def src_dir_path
           src_dir_path = "app/javascript/#{namespace}/src"
+          # src_dir_path = "app/javascript/#{namespace}/components"
         end
 
         def append_to_gitignore(file)

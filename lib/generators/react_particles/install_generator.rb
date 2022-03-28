@@ -37,6 +37,10 @@ module ReactParticles
         call_generator("react_particles:assets")
       end
 
+      def run_react_src_generator
+        call_generator("react_particles:react:src", "--namespace", namespace)
+      end
+
       def run_react_generator
         call_generator("react_particles:react", "--namespace", namespace)
       end

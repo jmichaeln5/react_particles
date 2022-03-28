@@ -27,7 +27,15 @@ module ReactParticles
         when :invoke
           `touch #{javascript_application_js_file_in_js_dir}`
             append_to_file(javascript_application_js_file_in_js_dir, "// Entry point for the build script in your package.json' \n")
+            ##################################
+            ##################################
+            ##################################
             append_to_file(javascript_application_js_file_in_js_dir, "import './components/index.jsx' \n")
+
+            append_to_file(javascript_application_js_file_in_js_dir, "import './src/index.jsx' \n")
+            ##################################
+            ##################################
+            ##################################
         when :revoke
           `rm -rf #{javascript_dir_path}`
           puts indent_str("removed ".red) + "#{javascript_dir_path}/*"
@@ -109,11 +117,6 @@ module ReactParticles
           puts "\n"
         end
       end
-
-      def run_react_src_generator
-        call_generator("react_particles:react:src", "--namespace", namespace)
-      end
-
 
       private
 
