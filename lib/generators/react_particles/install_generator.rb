@@ -38,7 +38,7 @@ module ReactParticles
       end
 
       def run_react_src_generator
-        call_generator("react_particles:react:src", "--namespace", namespace)
+        call_generator("react_particles:react:src")
       end
 
       def run_react_generator

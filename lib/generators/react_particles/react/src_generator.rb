@@ -52,7 +52,6 @@ module ReactParticles
           end
         end
 
-
         ########################
         ########################
         # def generate_app_test_in_src_dir_path
@@ -136,7 +135,7 @@ module ReactParticles
         def namespace
           options[:namespace]
         end
+      end
     end
   end
-end
 end

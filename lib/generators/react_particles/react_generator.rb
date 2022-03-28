@@ -27,12 +27,11 @@ module ReactParticles
         when :invoke
           `touch #{javascript_application_js_file_in_js_dir}`
             append_to_file(javascript_application_js_file_in_js_dir, "// Entry point for the build script in your package.json' \n")
-            ##################################
-            ##################################
-            ##################################
             append_to_file(javascript_application_js_file_in_js_dir, "import './components/index.jsx' \n")
-
-            append_to_file(javascript_application_js_file_in_js_dir, "import './src/index.jsx' \n")
+            ################################## Adds src to application.js to get bundled
+            ################################## Adds src to application.js to get bundled
+            ################################## Adds src to application.js to get bundled
+            # append_to_file(javascript_application_js_file_in_js_dir, "import './src/index.jsx' \n") 
             ##################################
             ##################################
             ##################################
