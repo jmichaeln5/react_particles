@@ -4,7 +4,7 @@ require "react_particles/namespace"
 
 module ReactParticles
   module Generators
-    class InstallReactGenerator < Rails::Generators::Base
+    class ReactGenerator < Rails::Generators::Base
       include ReactParticles::GeneratorHelpers
       source_root File.expand_path("../../templates", __FILE__)
 
@@ -16,7 +16,7 @@ module ReactParticles
           `mkdir #{javascript_dir_path}`
         when :revoke
           `rm -rf #{javascript_dir_path}`
-          puts indent_str("removed ".red) + "#{javascript_dir_path.green}/*"
+          puts indent_str("removed ".red) + "#{javascript_dir_path}/*"
         end
       end
 
@@ -26,10 +26,11 @@ module ReactParticles
         case self.behavior
         when :invoke
           `touch #{javascript_application_js_file_in_js_dir}`
-            append_to_file(javascript_application_js_file_in_js_dir, "import './components.jsx' \n")
+            append_to_file(javascript_application_js_file_in_js_dir, "// Entry point for the build script in your package.json' \n")
+            append_to_file(javascript_application_js_file_in_js_dir, "import './src/index.jsx' \n")
         when :revoke
           `rm -rf #{javascript_dir_path}`
-          puts indent_str("removed ".red) + "#{javascript_dir_path.green}/*"
+          puts indent_str("removed ".red) + "#{javascript_dir_path}/*"
         end
       end
 
@@ -44,21 +45,7 @@ module ReactParticles
             generated_react_application_package_json_file_path,
           )
         when :revoke
-          puts indent_str("removed ".red) + generated_react_application_package_json_file_path.green
-          `rm -rf #{javascript_dir_path}`
-        end
-      end
-
-      def generate_components_file
-        javascript_components_file_path = "#{javascript_dir_path}/components.jsx"
-        case self.behavior
-        when :invoke
-          template(
-            "component_template.js.erb",
-            javascript_components_file_path,
-          )
-        when :revoke
-          puts indent_str("removed ".red) + "#{javascript_components_file_path.green}"
+          puts indent_str("removed ".red) + generated_react_application_package_json_file_path
           `rm -rf #{javascript_dir_path}`
         end
       end
@@ -91,7 +78,7 @@ module ReactParticles
         case self.behavior
         when :invoke
           if Rails.root.join(".gitignore").exist?
-            append_to_gitignore("#{react_particles_node_modules}/*")
+            append_to_gitignore("/#{react_particles_node_modules}/*")
           else
             system "touch .gitignore"
             append_to_gitignore("#{react_particles_node_modules}/*")

@@ -29,7 +29,7 @@ Some notes before you get started:
 
   you MUST bundle your JavaScript AND precompile your assets after changes are made.
 
-  If updates will not be displayed. So don't forget to do so before spinning up your server.
+  If you don't updates/changes will not be displayed so don't forget to do so before spinning up your server.
 
   To do this cd into the new JavaScript directory (app/javascript/react_application)
 
