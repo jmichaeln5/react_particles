@@ -1,7 +1,7 @@
 # react_particles *** WIP ***
 A barebones React application built with encapsulation in mind.
 
-react_particles automates the installation of React using yarn, generates an encapsulated skeleton for your React application under the namespace of your choosing, then bundles your React application's JavaScript to your copy of the gems asset pipeline using esbuild, seperate from the asset pipeline of the application it is installed in.
+react_particles automates the installation of React using yarn, generates an encapsulated skeleton for your React application under the namespace of your choosing, then bundles your React application's JavaScript seperately from the JavaScript of the application it is installed in before delivering it to the asset pipeline.
 
 react_particles_manifest.js is referenced in the file app/views/layouts/react_application/application.html.erb generated upon installation.
 
