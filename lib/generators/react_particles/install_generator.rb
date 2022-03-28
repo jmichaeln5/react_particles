@@ -38,12 +38,13 @@ module ReactParticles
       end
 
       def run_react_src_generator
-        call_generator("react_particles:react:src")
+        # call_generator("react_particles:react:src")
+        call_generator("react_particles:react:src", "--namespace", namespace)
       end
 
       def run_react_generator
         call_generator("react_particles:react", "--namespace", namespace)
-      end      
+      end
 
       def generate_react_application_controller
         react_application_controller_template_file = "application_controller.rb.erb"
