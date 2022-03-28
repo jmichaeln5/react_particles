@@ -27,14 +27,7 @@ module ReactParticles
         when :invoke
           `touch #{javascript_application_js_file_in_js_dir}`
             append_to_file(javascript_application_js_file_in_js_dir, "// Entry point for the build script in your package.json' \n")
-            append_to_file(javascript_application_js_file_in_js_dir, "import './components/index.jsx' \n")
-            ################################## Adds src to application.js to get bundled
-            ################################## Adds src to application.js to get bundled
-            ################################## Adds src to application.js to get bundled
             append_to_file(javascript_application_js_file_in_js_dir, "import './src/index.jsx' \n")
-            ##################################
-            ##################################
-            ##################################
         when :revoke
           `rm -rf #{javascript_dir_path}`
           puts indent_str("removed ".red) + "#{javascript_dir_path}/*"
@@ -53,22 +46,6 @@ module ReactParticles
           )
         when :revoke
           puts indent_str("removed ".red) + generated_react_application_package_json_file_path
-          `rm -rf #{javascript_dir_path}`
-        end
-      end
-
-      def generate_components_file
-        javascript_components_dir_path = "#{javascript_dir_path}/components"
-        javascript_components_file_path = "#{javascript_components_dir_path}/index.jsx"
-        case self.behavior
-        when :invoke
-          `mkdir #{javascript_components_dir_path}`
-          template(
-            "components_index_template.js.erb",
-            javascript_components_file_path,
-          )
-        when :revoke
-          puts indent_str("removed ".red) + "#{javascript_components_file_path}"
           `rm -rf #{javascript_dir_path}`
         end
       end
