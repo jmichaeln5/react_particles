@@ -40,7 +40,7 @@ module ReactParticles
             `touch #{ASSETS_CONFIG_MANIFEST_FILE_PATH}`
           when :revoke
             `rm #{ASSETS_CONFIG_MANIFEST_FILE_PATH}`
-            puts indent_str("removed ".red) + "#{ASSETS_CONFIG_MANIFEST_FILE_PATH.green}"
+            puts indent_str("removed ".red) + "#{ASSETS_CONFIG_MANIFEST_FILE_PATH}"
           end
           if (sprockets_manifest_path = Rails.root.join(ASSETS_CONFIG_MANIFEST_FILE_PATH)).exist?
             append_to_file sprockets_manifest_path, %(//= link_tree ../javascripts/react_particles\n)
