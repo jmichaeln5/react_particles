@@ -6,7 +6,7 @@ module ReactParticles
   module Generators
     class InstallGenerator < Rails::Generators::Base
       include ReactParticles::GeneratorHelpers
-      source_root File.expand_path("../../templates", __FILE__)
+      source_root File.expand_path("../install/templates", __FILE__)
 
       class_option :namespace, type: :string, default: "react_application"
         # e.g. with namespace
@@ -31,20 +31,29 @@ module ReactParticles
           puts indent_str("\nremoved ".red) + react_particles_initializer_file_path + "\n"
           `rm #{react_particles_initializer_file_path}`
         end
+        say_done("generate_react_particles_initializer")
       end
 
       def run_assets_generator
-        call_generator("react_particles:assets")
+        call_generator("react_particles:install:assets")
+        say_done("run_assets_generator")
       end
 
       def run_react_src_generator
-        # call_generator("react_particles:react:src")
-        call_generator("react_particles:react:src", "--namespace", namespace)
+        # call_generator("react_particles:install:react:src")
+        call_generator("react_particles:install:react:src", "--namespace", namespace)
+        say_done("run_react_src_generator")
       end
 
       def run_react_generator
-        call_generator("react_particles:react", "--namespace", namespace)
+        call_generator("react_particles:install:react", "--namespace", namespace)
+        say_done("run_react_generator")
       end
+
+
+
+
+
 
       def generate_react_application_controller
         react_application_controller_template_file = "application_controller.rb.erb"
@@ -61,20 +70,37 @@ module ReactParticles
           puts indent_str("removed ".red) + generated_react_application_controller_file_path
           `rm -rf app/controllers/#{namespace}/`
         end
+        say_done("generate_react_application_controller")
       end
 
+
+
+
+
+
       def generate_react_application_layout
+        engine_app_application_html_erb_path = File.expand_path("../../../../app/views/layouts/react_particles/application.html.erb", __FILE__)
+
         case self.behavior
         when :invoke
           copy_file(
-            "../../../app/views/layouts/react_particles/application.html.erb",
+            engine_app_application_html_erb_path,
             "app/views/layouts/#{namespace}/application.html.erb",
           )
         when :revoke
           puts indent_str("removed ".red) + "app/views/layouts/#{namespace}/*"
           `rm -rf app/views/layouts/#{namespace}/`
         end
+        say_done("generate_react_application_layout")
       end
+
+
+
+
+
+
+
+
 
       def generate_default_components_controller
         components_controller_template_file = "components_controller.rb.erb"
@@ -90,6 +116,7 @@ module ReactParticles
           puts indent_str("removed ".red) + generated_components_controller_file_path
           `rm -rf app/controllers/#{namespace}`
         end
+        say_done("generate_default_components_controller")
       end
 
       def generate_default_components_view
@@ -106,6 +133,7 @@ module ReactParticles
           puts indent_str("removed ".red) + components_view_template_file
           `rm -rf app/views/#{namespace}/`
         end
+        say_done("generate_default_components_view")
       end
 
       def generate_react_application_routes
@@ -121,6 +149,7 @@ module ReactParticles
         end
 
         Rails.application.reload_routes!
+        say_done("generate_react_application_routes")
       end
 
       def show_readme
@@ -140,6 +169,15 @@ module ReactParticles
       def react_application_resources
         ReactParticles::Namespace.new(namespace).resources
       end
+
+      def say_done(arg)
+        puts "\n"*3
+        puts ("*"*50 + "\n")*2
+        puts " ****     DONE with #{arg}  **** \n"*5
+        puts ("*"*50 + "\n")*2
+        puts "\n"*3
+      end
+
     end
   end
 end
