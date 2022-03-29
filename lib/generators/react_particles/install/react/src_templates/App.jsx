@@ -7,8 +7,11 @@ function App() {
       <header className="App-header">
 
         <h2>Components#index</h2>
-        <p>HTML: Find me in app/views/react_particles/components/index.html.erb</p>
-        <p>JS: Find me in app/javascript/react_application/src/App.jsx</p>
+        <p>
+          HTML: Find me in app/views/react_particles/components/index.html.erb
+          <br/>
+          JS: Find me in app/javascript/react_application/src/App.jsx
+        </p>
 
         <svg
         className="App-logo"
