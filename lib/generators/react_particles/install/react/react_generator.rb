@@ -92,11 +92,12 @@ module ReactParticles
             end
           when :revoke
             puts "\n"
-            3.times do puts "*"*50 end
+            3.times do puts "*"*51 end
+            say "WARNING!".yellow
             say "The following files/dirs have been removed:\n\n"
             puts indent_str("#{removed_react_particles_node_modules_path}".green)
-            say "\nPlease remove any reference to them in .gitignore file\n"
-            3.times do puts "*"*50 end
+            say "\nPlease remove any reference of them from .gitignore".yellow
+            3.times do puts "*"*51 end
             puts "\n"
           end
         end

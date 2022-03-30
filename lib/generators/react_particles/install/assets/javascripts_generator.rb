@@ -33,7 +33,6 @@ module ReactParticles
               `touch #{REACT_PARTICLES_APP_JS_FILE}` unless (File.exists? REACT_PARTICLES_APP_JS_FILE)
             when :revoke
               say indent_str("\n\nremoved ".red + "react_particles/" + "application.js" + "\n   -JS for react_particles gets bundled here before getting delivered to asset pipeline \n\n")
-
               `rm #{REACT_PARTICLES_APP_JS_FILE}` if (File.exists? REACT_PARTICLES_APP_JS_FILE)
             end
           end

@@ -1,0 +1,31 @@
+namespace :react_particles do
+  namespace :javascript do
+    desc "Build your React Particles JavaScript bundle"
+    task :build do
+
+      previous_working_directory = File.dirname(__FILE__)
+      app_root_path = File.expand_path('../../../app', __dir__)
+
+      react_particles_js_root_path = "#{app_root_path}<%="/javascript/#{namespace}" %>"
+
+      chdir react_particles_js_root_path do
+        unless system "yarn install && yarn build"
+          raise "react_particles:jsbundling-rails: Command build failed, ensure yarn is installed in #{app_root_path}<%="/javascript/#{namespace}" %> `yarn build` runs without errors"
+        end
+      end
+
+      Dir.chdir(previous_working_directory)
+
+    end
+  end
+end
+
+if Rake::Task.task_defined?("assets:precompile")
+  Rake::Task["assets:precompile"].enhance(["react_particles:javascript:build"])
+end
+
+if Rake::Task.task_defined?("test:prepare")
+  Rake::Task["test:prepare"].enhance(["react_particles:javascript:build"])
+elsif Rake::Task.task_defined?("db:test:prepare")
+  Rake::Task["db:test:prepare"].enhance(["react_particles:javascript:build"])
+end

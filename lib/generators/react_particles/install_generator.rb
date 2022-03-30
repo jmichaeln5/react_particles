@@ -28,8 +28,8 @@ module ReactParticles
             react_particles_initializer_file_path,
           )
         when :revoke
-          puts indent_str("\nremoved ".red) + react_particles_initializer_file_path + "\n"
           `rm #{react_particles_initializer_file_path}`
+          puts indent_str("\nremoved ".red) + react_particles_initializer_file_path + "\n"
         end
       end
 
@@ -47,6 +47,10 @@ module ReactParticles
 
       def run_install_start_generator
         call_generator("react_particles:install:start", "--namespace", namespace)
+      end
+
+      def run_jsbundling_build_generator
+        call_generator("react_particles:jsbundling:build", "--namespace", namespace)
       end
 
       def generate_react_application_controller
