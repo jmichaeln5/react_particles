@@ -98,22 +98,23 @@ module ReactParticles
 
         private
 
-        def javascript_dir_path
-          javascript_dir_path = "app/javascript/#{namespace}"
-        end
-
-        def append_to_gitignore(file)
-          if Rails.root.join(".gitignore").exist?
-            append_to_file(".gitignore", "\n #{file} \n")
-          else
-            system "touch .gitignore"
-            append_to_file(".gitignore", "\n #{file} \n")
+          def javascript_dir_path
+            javascript_dir_path = "app/javascript/#{namespace}"
           end
-        end
 
-        def namespace
-          options[:namespace]
-        end
+          def append_to_gitignore(file)
+            if Rails.root.join(".gitignore").exist?
+              append_to_file(".gitignore", "\n #{file} \n")
+            else
+              system "touch .gitignore"
+              append_to_file(".gitignore", "\n #{file} \n")
+            end
+          end
+
+          def namespace
+            options[:namespace]
+          end
+
       end
     end
   end
