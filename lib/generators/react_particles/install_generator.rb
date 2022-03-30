@@ -40,7 +40,6 @@ module ReactParticles
       end
 
       def run_react_src_generator
-        # call_generator("react_particles:install:react:src")
         call_generator("react_particles:install:react:src", "--namespace", namespace)
         say_done("run_react_src_generator")
       end
@@ -51,11 +50,24 @@ module ReactParticles
       end
 
 
-
+      ###########################
+      ###########################
+      ###########################
       def run_js_bunlding_say_hi_rake
         call_generator("react_particles:jsbundling:say_hi")
         say_done("run_js_bunlding_say_hi_rake")
       end
+
+
+      def run_copy_react_particles_start_rake
+        call_generator("react_particles:jsbundling:react_particles_start", "--namespace", namespace)
+        puts ("*"*40 + "\n")*3
+        say_done("run_react_particles_start_rake")
+        puts ("*"*40 + "\n")*3
+      end
+      ###########################
+      ###########################
+      ###########################
 
 
 
