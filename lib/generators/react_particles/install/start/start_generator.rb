@@ -15,7 +15,6 @@ module ReactParticles
         def copy_react_particles_start_rake
           start_tt = "start.html.erb"
           start_path = "#{app_react_particles_rake_tasks_dir}/start.rake"
-          `mkdir #{app_react_particles_rake_tasks_dir}` unless (Dir.exists? app_react_particles_rake_tasks_dir)
 
           case self.behavior
           when :invoke

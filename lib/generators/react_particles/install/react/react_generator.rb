@@ -15,10 +15,10 @@ module ReactParticles
         def generate_namespaced_javascript_dir
           case self.behavior
           when :invoke
-            `mkdir #{javascript_dir_path}`
+            `mkdir #{javascript_dir_path}` unless (Dir.exists? javascript_dir_path)
           when :revoke
             `rm -rf #{javascript_dir_path}`
-            puts indent_str("removed ".red) + "#{javascript_dir_path}/*"
+            puts indent_str("removed ".red) + "#{javascript_dir_path}/*" if (Dir.exists? javascript_dir_path)
           end
         end
 
@@ -52,6 +52,11 @@ module ReactParticles
           end
         end
 
+
+
+        #####################################################
+        #####################################################
+        #####################################################
         def install_react_es_build_with_yarn
           generated_react_application_package_json_file_path = "#{javascript_dir_path}/package.json"
 
@@ -95,6 +100,11 @@ module ReactParticles
             puts "\n"
           end
         end
+        #####################################################
+        #####################################################
+        #####################################################
+
+
 
         private
 
@@ -102,6 +112,7 @@ module ReactParticles
             javascript_dir_path = "app/javascript/#{namespace}"
           end
 
+        #####################################################
           def append_to_gitignore(file)
             if Rails.root.join(".gitignore").exist?
               append_to_file(".gitignore", "\n #{file} \n")
@@ -110,6 +121,7 @@ module ReactParticles
               append_to_file(".gitignore", "\n #{file} \n")
             end
           end
+        #####################################################
 
           def namespace
             options[:namespace]

@@ -32,7 +32,7 @@ module ReactParticles
 
               `touch #{REACT_PARTICLES_APP_JS_FILE}` unless (File.exists? REACT_PARTICLES_APP_JS_FILE)
             when :revoke
-              say indent_str("\n\nRemoving react_particles " + "application.js".green + "\n   -JS for react_particles gets bundled here before getting delivered to asset pipeline \n\n")
+              say indent_str("\n\nremoved ".red + "react_particles/" + "application.js" + "\n   -JS for react_particles gets bundled here before getting delivered to asset pipeline \n\n")
 
               `rm #{REACT_PARTICLES_APP_JS_FILE}` if (File.exists? REACT_PARTICLES_APP_JS_FILE)
             end
@@ -46,7 +46,7 @@ module ReactParticles
               `mkdir #{APP_ASSETS_CONFIG_DIR}` unless (Dir.exists? APP_ASSETS_CONFIG_DIR)
               `touch #{REACT_PARTICLES_MANIFEST_JS_FILE}` unless (File.exists? REACT_PARTICLES_MANIFEST_JS_FILE)
             when :revoke
-              puts indent_str("\n\nremoved ".red) + "#{REACT_PARTICLES_MANIFEST_JS_FILE}\n\n"
+              puts indent_str("\nremoved ".red) + "#{REACT_PARTICLES_MANIFEST_JS_FILE}\n\n"
               `rm #{REACT_PARTICLES_MANIFEST_JS_FILE}` if (File.exists? REACT_PARTICLES_MANIFEST_JS_FILE)
             end
             if Rails.root.join(REACT_PARTICLES_MANIFEST_JS_FILE).exist?
