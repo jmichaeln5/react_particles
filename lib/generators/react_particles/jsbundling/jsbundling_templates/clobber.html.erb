@@ -1,0 +1,12 @@
+namespace :react_particles do
+  namespace :javascript do
+    desc "Remove JavaScript builds"
+    task :clobber do
+      rm_rf Dir["app/assets/javascripts/react_particles"], verbose: false
+    end
+  end
+end
+
+if Rake::Task.task_defined?("assets:clobber")
+  Rake::Task["assets:clobber"].enhance(["react_particles:javascript:clobber"])
+end

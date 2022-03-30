@@ -53,6 +53,10 @@ module ReactParticles
         call_generator("react_particles:jsbundling:build", "--namespace", namespace)
       end
 
+      def run_jsbundling_clobber_generator
+        call_generator("react_particles:jsbundling:clobber")
+      end
+
       def generate_react_application_controller
         react_application_controller_template_file = "application_controller.rb.erb"
         generated_react_application_controller_file_path = "app/controllers/#{namespace}/application_controller.rb"
