@@ -52,6 +52,10 @@ module ReactParticles
 
 
 
+      def run_js_bunlding_say_hi_rake
+        call_generator("react_particles:jsbundling:say_hi")
+        say_done("run_js_bunlding_say_hi_rake")
+      end
 
 
 
