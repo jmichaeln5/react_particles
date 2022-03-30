@@ -12,9 +12,6 @@ module ReactParticles
 
         class_option :namespace, type: :string, default: "react_application"
 
-        app_rake_tasks_dir = "lib/tasks"
-        app_react_particles_rake_tasks_dir = "#{app_rake_tasks_dir}/react_particles"
-
         def copy_react_particles_start_rake
           start_tt = "start.html.erb"
           start_path = "#{app_react_particles_rake_tasks_dir}/start.rake"
@@ -36,6 +33,10 @@ module ReactParticles
 
           def namespace
             options[:namespace]
+          end
+
+          def app_react_particles_rake_tasks_dir
+            return "lib/tasks/react_particles"
           end
 
       end
