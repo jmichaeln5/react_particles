@@ -5,7 +5,7 @@ require "react_particles/namespace"
 module ReactParticles
   module Generators
     module Jsbundling
-      module Install
+      module InstallBundler
         class RollupGenerator < Rails::Generators::Base
           include ReactParticles::GeneratorHelpers
 

@@ -10,7 +10,7 @@ function App() {
         <p>
           HTML: Find me in app/views/react_particles/components/index.html.erb
           <br/>
-          JS: Find me in app/javascript/react_application/src/App.jsx
+          JS: Find me in app/javascript/react_particles/src/App.jsx
         </p>
 
         <svg
@@ -21,7 +21,7 @@ function App() {
         <p>
           Edit App.jsx then execute the following in the root of your React application:
           <br/>
-          <code>   $ react-particles-start </code>
+          <code> $ rails react_particles:start </code>
           <br/>
           Reload to view changes
           <br/>

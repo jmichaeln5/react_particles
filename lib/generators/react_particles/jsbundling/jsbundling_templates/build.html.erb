@@ -6,9 +6,9 @@ namespace :react_particles do
       previous_working_directory = File.dirname(__FILE__)
       app_root_path = File.expand_path('../../../app', __dir__)
 
-      react_particles_js_root_path = "#{app_root_path}<%="/javascript/#{namespace}" %>"
+      react_particles_app_root_path = "#{app_root_path}<%="/javascript/#{namespace}" %>"
 
-      chdir react_particles_js_root_path do
+      chdir react_particles_app_root_path do
         unless system "yarn install && yarn build"
           raise "react_particles:jsbundling-rails: Command build failed, ensure yarn is installed in #{app_root_path}<%="/javascript/#{namespace}" %> `yarn build` runs without errors"
         end

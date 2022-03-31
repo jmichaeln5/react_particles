@@ -23,8 +23,13 @@ module ReactParticles
               output_js_bundler_path,
             )
           when :revoke
-            puts indent_str("removed ".red) + "#{output_js_bundler_path}"
             `rm #{output_js_bundler_path}` if (File.exists? output_js_bundler_path)
+            puts indent_str("removed ".red) + "#{output_js_bundler_path}" if (File.exists? output_js_bundler_path)
+
+            if (Dir.exists? app_react_particles_rake_tasks_dir) and Dir.empty?(app_react_particles_rake_tasks_dir)
+              puts indent_str("removed ".red) + "#{app_react_particles_rake_tasks_dir}"
+              `rm -rf #{app_react_particles_rake_tasks_dir}`
+            end
           end
         end
 
@@ -44,14 +49,14 @@ module ReactParticles
 
           def js_bundler
             js_bundler_input = options[:js_bundler]
-            js_bundler_input.downcase!
+            js_bundler_input.to_s.downcase!
 
             if BUNDLER_OPTIONS.include? js_bundler_input
               return js_bundler_input
             else
               system `rm #{output_js_bundler_path}`
                 if (Dir.exists? app_react_particles_rake_tasks_dir) and Dir.empty?(app_react_particles_rake_tasks_dir)
-                `rm -rf #{app_react_particles_rake_tasks_dir}`
+                  `rm -rf #{app_react_particles_rake_tasks_dir}`
                 end
 
               raise "\n\n\n ERROR: Invalid JavaScript bundler. \n\n please run again with one of the following options: \n\n --js_bundler=esbuild \n --js_bundler=rollup \n --js_bundler=webpack\n\n\n "

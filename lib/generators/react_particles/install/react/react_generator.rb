@@ -54,9 +54,9 @@ module ReactParticles
 
 
 
-        #####################################################
-        #####################################################
-        #####################################################
+############################ NOTE # Should be done in ..../jsbundling/install_generator.rb
+############################ NOTE # Should be done in ..../jsbundling/install_generator.rb
+############################ NOTE # Should be done in ..../jsbundling/install_generator.rb
         def install_react_es_build_with_yarn
           generated_react_application_package_json_file_path = "#{javascript_dir_path}/package.json"
 
@@ -101,9 +101,9 @@ module ReactParticles
             puts "\n"
           end
         end
-        #####################################################
-        #####################################################
-        #####################################################
+#####################################################
+#####################################################
+#####################################################
 
 
 
@@ -113,7 +113,7 @@ module ReactParticles
             javascript_dir_path = "app/javascript/#{namespace}"
           end
 
-        #####################################################
+        ##################################################### NOTE # Add to generator helpers
           def append_to_gitignore(file)
             if Rails.root.join(".gitignore").exist?
               append_to_file(".gitignore", "\n #{file} \n")

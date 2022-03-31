@@ -40,7 +40,7 @@ module ReactParticles
           def generate_react_particles_assets_manifest_js
             case self.behavior
             when :invoke
-              say "\nCreating react_particles javascripts " + "react_particles_manifest.js".green + "\n    -Entry point for Engine's Asset Pipeline\n\n"
+              say "\nCreating react_particles javascripts " + "react_particles_manifest.js".green + "\n    -Entry point for asset pipeline\n\n"
 
               `mkdir #{APP_ASSETS_CONFIG_DIR}` unless (Dir.exists? APP_ASSETS_CONFIG_DIR)
               `touch #{REACT_PARTICLES_MANIFEST_JS_FILE}` unless (File.exists? REACT_PARTICLES_MANIFEST_JS_FILE)

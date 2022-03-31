@@ -1,3 +1,7 @@
+### NOTE MAIN INSTALL GENERATOR
+### NOTE MAIN INSTALL GENERATOR
+### NOTE MAIN INSTALL GENERATOR
+
 require "rails/generators/base"
 require "react_particles/generator_helpers"
 require "react_particles/namespace"
