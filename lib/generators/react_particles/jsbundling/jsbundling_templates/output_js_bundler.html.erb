@@ -1,0 +1,10 @@
+namespace :react_particles do
+  namespace :javascript do
+    desc "Remove JavaScript builds"
+    task :output_js_bundler do
+      return "<%="#{js_bundler}" %>"
+    end
+  end
+end
+
+puts "React Particles bundled with <%="#{js_bundler}" %>"
