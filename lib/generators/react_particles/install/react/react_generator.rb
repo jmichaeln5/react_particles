@@ -1,6 +1,5 @@
 require "rails/generators/base"
 require "react_particles/generator_helpers"
-# require "react_particles/namespace"
 
 module ReactParticles
   module Generators
@@ -15,6 +14,7 @@ module ReactParticles
         def run_react_src_generator
           call_generator("react_particles:install:react:src", "--namespace", namespace)
         end
+        
 
         def generate_namespaced_javascript_dir
           case self.behavior
