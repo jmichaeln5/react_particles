@@ -8,6 +8,7 @@ module ReactParticles
       include ReactParticles::GeneratorHelpers
       source_root File.expand_path("../install/templates", __FILE__)
 
+      class_option :js_bundler, type: :string, default: "esbuild"
       class_option :namespace, type: :string, default: "react_application"
         # e.g. with namespace
           # rails g react_particles:install --namespace reakt_app
@@ -151,6 +152,10 @@ module ReactParticles
 
         def namespace
           options[:namespace]
+        end
+
+        def js_bundler
+          options[:js_bundler]
         end
 
         def singular_react_application_resources
