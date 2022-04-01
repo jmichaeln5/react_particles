@@ -23,8 +23,13 @@ module ReactParticles
               build_path,
             )
           when :revoke
-            `rm -rf #{app_react_particles_rake_tasks_dir}` if (Dir.exists? app_react_particles_rake_tasks_dir)
-            puts indent_str("removed ".red) + "#{build_path}"
+            if Rails.root.join(build_path).exist?
+              `rm #{build_path}`
+              puts indent_str("removed ".red) + "#{build_path}"
+              `rm -rf #{app_react_particles_rake_tasks_dir}` if (Dir.exists? app_react_particles_rake_tasks_dir) and (Dir.empty? app_react_particles_rake_tasks_dir)
+            else
+              raise "\n\nreact_particles:jsbundling-rails: Command failed\n\nfile does not exist: \n #{build_path}\n\n"
+            end
           end
         end
 

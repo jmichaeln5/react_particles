@@ -19,8 +19,16 @@ module ReactParticles
               clobber_path,
             )
           when :revoke
-            `rm -rf #{app_react_particles_rake_tasks_dir}` if (Dir.exists? app_react_particles_rake_tasks_dir)
-            puts indent_str("removed ".red) + "#{clobber_path}"
+            if Rails.root.join(clobber_path).exist?
+              `rm #{clobber_path}`
+              puts indent_str("removed ".red) + "#{clobber_path}"
+              `rm -rf #{app_react_particles_rake_tasks_dir}` if (Dir.exists? app_react_particles_rake_tasks_dir) and (Dir.empty? app_react_particles_rake_tasks_dir)
+            else
+              raise "\n\nreact_particles:jsbundling-rails: Command failed\n\nfile does not exist: \n #{clobber_path}\n\n"
+            end
+
+            # `rm -rf #{app_react_particles_rake_tasks_dir}` if (Dir.exists? app_react_particles_rake_tasks_dir)
+            # puts indent_str("removed ".red) + "#{clobber_path}"
           end
         end
 
