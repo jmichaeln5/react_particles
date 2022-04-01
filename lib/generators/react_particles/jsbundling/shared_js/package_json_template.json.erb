@@ -1,0 +1,18 @@
+<%# require 'json' %>
+<%#
+  default_script = {
+    name: "#{namespace}", private: "true",
+      "dependencies": {},
+      "scripts": {
+        build: "esbuild --bundle ./application.js --outfile=../../assets/javascripts/react_particles/application.js",
+        watch: "esbuild --watch --bundle ./application.js --outfile=../../assets/javascripts/react_particles/application.js"
+      }
+  }
+%>
+
+<%#= JSON.pretty_generate(default_script) %>
+
+{
+  "name": "app",
+  "private": "true"
+}

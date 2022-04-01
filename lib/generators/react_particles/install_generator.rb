@@ -11,15 +11,11 @@ module ReactParticles
     class InstallGenerator < Rails::Generators::Base
       include ReactParticles::GeneratorHelpers
       source_root File.expand_path("../install/templates", __FILE__)
-
       class_option :namespace, type: :string, default: "react_application"
-        # e.g. with namespace
-          # rails g react_particles:install --namespace reakt_app
-          # creates: app/controllers/reakt_app/application_controller.rb
+      class_option :js_bundler, type: :string, default: "esbuild"
 
-        # e.g. without namespace
-          # rails g react_particles:install
-          # creates: app/controllers/react_application/application_controller.rb
+      ENGINE_APP_ROOT = File.expand_path("../../../../app", __dir__)
+      HOST_APP_ROOT = Rails.root.join("app")
 
       def generate_react_particles_initializer
         react_particles_initializer_template_file = "react_particles.rb"
@@ -41,25 +37,26 @@ module ReactParticles
         call_generator("react_particles:install:assets")
       end
 
-      def run_react_src_generator
-        call_generator("react_particles:install:react:src", "--namespace", namespace)
-      end
-
       def run_react_generator
         call_generator("react_particles:install:react", "--namespace", namespace)
       end
 
-      def run_install_start_generator
+      def run_js_bundling_rake_task_generators
         call_generator("react_particles:install:start", "--namespace", namespace)
-      end
-
-      def run_jsbundling_build_generator
         call_generator("react_particles:jsbundling:build", "--namespace", namespace)
-      end
-
-      def run_jsbundling_clobber_generator
         call_generator("react_particles:jsbundling:clobber")
       end
+
+      ## (Here to test js_bundler class_option) Call method in:
+      ## lib/generators/react_particles/jsbundling/install_generator.rb
+      # def run_output_js_bundler_generator
+      #   call_generator("react_particles:jsbundling:output_js_bundler", "--js_bundler", js_bundler)
+      #   puts "*"*50
+      #   puts "*"*50
+      #   puts "run_output_js_bundler_generator \n"*4
+      #   puts "*"*50
+      #   puts "*"*50
+      # end
 
       def generate_react_application_controller
         react_application_controller_template_file = "application_controller.rb.erb"
@@ -78,7 +75,7 @@ module ReactParticles
         end
       end
 
-      def generate_react_application_layout
+      def generate_react_particles_application_layout
         engine_app_application_html_erb_path = File.expand_path("../../../../app/views/layouts/react_particles/application.html.erb", __FILE__)
 
         case self.behavior
@@ -148,6 +145,10 @@ module ReactParticles
 
         def namespace
           options[:namespace]
+        end
+
+        def js_bundler
+          options[:js_bundler]
         end
 
         def singular_react_application_resources

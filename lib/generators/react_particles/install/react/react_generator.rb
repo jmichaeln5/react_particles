@@ -11,19 +11,24 @@ module ReactParticles
         source_root File.expand_path("../react_templates", __FILE__)
 
         class_option :namespace, type: :string, default: "react_application"
+        class_option :js_bundler, type: :string, default: "esbuild"
 
         def generate_namespaced_javascript_dir
           case self.behavior
           when :invoke
-            `mkdir #{javascript_dir_path}` unless (Dir.exists? javascript_dir_path)
+            unless (react_app_js_path).exist?
+              `mkdir #{react_app_js_path}`
+            end
           when :revoke
-            `rm -rf #{javascript_dir_path}`
-            puts indent_str("removed ".red) + "#{javascript_dir_path}/*" if (Dir.exists? javascript_dir_path)
+            `rm -rf #{react_app_js_path}`
+            if (app_js_entrypoint_path).exist?
+              puts indent_str("removed ".red) + "#{react_app_js_path}/*"
+            end
           end
         end
 
         def generate_namespaced_application_js_in_javascript_dir
-          javascript_application_js_file_in_js_dir = "app/javascript/#{namespace}/application.js"
+          javascript_application_js_file_in_js_dir = "#{react_app_js_path}/application.js"
 
           case self.behavior
           when :invoke
@@ -31,14 +36,14 @@ module ReactParticles
               append_to_file(javascript_application_js_file_in_js_dir, "// Entry point for the build script in your package.json' \n")
               append_to_file(javascript_application_js_file_in_js_dir, "import './src/index.jsx' \n")
           when :revoke
-            `rm -rf #{javascript_dir_path}`
-            puts indent_str("removed ".red) + "#{javascript_dir_path}/*"
+            `rm -rf #{react_app_js_path}`
+            puts indent_str("removed ".red) + "#{react_app_js_path}/*"
           end
         end
 
         def generate_package_json_file_in_namespaced_javascript_dir
           react_application_package_json_template_file = "package_json_template.json.erb"
-          generated_react_application_package_json_file_path = "#{javascript_dir_path}/package.json"
+          generated_react_application_package_json_file_path = "#{react_app_js_path}/package.json"
 
           case self.behavior
           when :invoke
@@ -48,7 +53,7 @@ module ReactParticles
             )
           when :revoke
             puts indent_str("removed ".red) + generated_react_application_package_json_file_path
-            `rm -rf #{javascript_dir_path}`
+            `rm -rf #{react_app_js_path}`
           end
         end
 
@@ -57,50 +62,50 @@ module ReactParticles
 ############################ NOTE # Should be done in ..../jsbundling/install_generator.rb
 ############################ NOTE # Should be done in ..../jsbundling/install_generator.rb
 ############################ NOTE # Should be done in ..../jsbundling/install_generator.rb
-        def install_react_es_build_with_yarn
-          generated_react_application_package_json_file_path = "#{javascript_dir_path}/package.json"
-
-          case self.behavior
-          when :invoke
-            if ( generated_json_file_path = Rails.root.join(generated_react_application_package_json_file_path)).exist?
-              Dir.chdir "#{javascript_dir_path}" do
-                  system 'yarn add react react-dom esbuild'
-                  system 'yarn run build'
-              end
-            end
-          when :revoke
-            if ( generated_json_file_path = Rails.root.join(generated_react_application_package_json_file_path)).exist?
-              Dir.chdir "#{javascript_dir_path}" do
-                  system 'yarn remove react react-dom esbuild'
-              end
-              `rm -rf #{javascript_dir_path}`
-            end
-          end
-        end
-
-        def add_node_modules_to_git_ignore
-          react_particles_node_modules = "#{javascript_dir_path}/node_modules"
-
-          removed_react_particles_node_modules_path = "app/javascript/___namespace___/node_modules"
-          case self.behavior
-          when :invoke
-            if Rails.root.join(".gitignore").exist?
-              append_to_gitignore("/#{react_particles_node_modules}/*")
-            else
-              system "touch .gitignore"
-              append_to_gitignore("#{react_particles_node_modules}/*")
-            end
-          when :revoke
-            puts "\n"
-            3.times do puts "*"*51 end
-            say "WARNING!".yellow
-            say "The following files/dirs have been removed:\n\n"
-            puts indent_str("#{removed_react_particles_node_modules_path}".green)
-            say "\nPlease remove any reference of them from .gitignore".yellow
-            3.times do puts "*"*51 end
-            puts "\n"
-          end
-        end
+        # def install_react_es_build_with_yarn
+        #   generated_react_application_package_json_file_path = "#{react_app_js_path}/package.json"
+        #
+        #   case self.behavior
+        #   when :invoke
+        #     if ( generated_json_file_path = Rails.root.join(generated_react_application_package_json_file_path)).exist?
+        #       Dir.chdir "#{react_app_js_path}" do
+        #           system 'yarn add react react-dom esbuild'
+        #           system 'yarn run build'
+        #       end
+        #     end
+        #   when :revoke
+        #     if ( generated_json_file_path = Rails.root.join(generated_react_application_package_json_file_path)).exist?
+        #       Dir.chdir "#{react_app_js_path}" do
+        #           system 'yarn remove react react-dom esbuild'
+        #       end
+        #       `rm -rf #{react_app_js_path}`
+        #     end
+        #   end
+        # end
+        #
+        # def add_node_modules_to_git_ignore
+        #   react_particles_node_modules = "#{react_app_js_path}/node_modules"
+        #
+        #   removed_react_particles_node_modules_path = "app/javascript/___namespace___/node_modules"
+        #   case self.behavior
+        #   when :invoke
+        #     if Rails.root.join(".gitignore").exist?
+        #       append_to_gitignore("/#{react_particles_node_modules}/*")
+        #     else
+        #       system "touch .gitignore"
+        #       append_to_gitignore("#{react_particles_node_modules}/*")
+        #     end
+        #   when :revoke
+        #     puts "\n"
+        #     3.times do puts "*"*51 end
+        #     say "WARNING!".yellow
+        #     say "The following files/dirs have been removed:\n\n"
+        #     puts indent_str("#{removed_react_particles_node_modules_path}".green)
+        #     say "\nPlease remove any reference of them from .gitignore".yellow
+        #     3.times do puts "*"*51 end
+        #     puts "\n"
+        #   end
+        # end
 #####################################################
 #####################################################
 #####################################################
@@ -109,9 +114,18 @@ module ReactParticles
 
         private
 
-          def javascript_dir_path
-            javascript_dir_path = "app/javascript/#{namespace}"
+          def namespace
+            options[:namespace]
           end
+
+          def js_bundler
+            options[:js_bundler]
+          end
+
+          def react_app_js_path
+            return Rails.root.join("app/javascript/#{namespace}")
+          end
+
 
         ##################################################### NOTE # Add to generator helpers
           def append_to_gitignore(file)
@@ -123,11 +137,6 @@ module ReactParticles
             end
           end
         #####################################################
-
-          def namespace
-            options[:namespace]
-          end
-
       end
     end
   end

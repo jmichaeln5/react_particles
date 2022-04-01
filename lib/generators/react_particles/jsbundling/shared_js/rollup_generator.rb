@@ -6,8 +6,11 @@ module ReactParticles
   module Generators
     module Jsbundling
       module InstallBundler
-        class WebpackGenerator < Rails::Generators::Base
+        class RollupGenerator < Rails::Generators::Base
           include ReactParticles::GeneratorHelpers
+
+          source_root File.expand_path("../rollup", __FILE__)
+
 
         end
       end

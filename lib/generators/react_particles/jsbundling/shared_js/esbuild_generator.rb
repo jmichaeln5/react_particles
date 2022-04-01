@@ -9,6 +9,8 @@ module ReactParticles
         class EsbuildGenerator < Rails::Generators::Base
           include ReactParticles::GeneratorHelpers
 
+          source_root File.expand_path("../esbuild", __FILE__)
+
 
         end
       end
