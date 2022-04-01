@@ -24,7 +24,8 @@ module ReactParticles
               puts indent_str("removed ".red) + "#{clobber_path}"
               `rm -rf #{app_react_particles_rake_tasks_dir}` if (Dir.exists? app_react_particles_rake_tasks_dir) and (Dir.empty? app_react_particles_rake_tasks_dir)
             else
-              raise "\n\nreact_particles:jsbundling-rails: Command failed\n\nfile does not exist: \n #{clobber_path}\n\n"
+              puts "\n\nreact_particles:jsbundling-rails: Command ignored".yellow
+              puts"\n\nfile does not exist: \n #{clobber_path}\n\n".red
             end
           end
         end
