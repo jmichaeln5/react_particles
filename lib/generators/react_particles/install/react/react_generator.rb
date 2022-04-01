@@ -11,11 +11,6 @@ module ReactParticles
 
         class_option :namespace, type: :string, default: "react_application"
 
-        def run_react_src_generator
-          call_generator("react_particles:install:react:src", "--namespace", namespace)
-        end
-        
-
         def generate_namespaced_javascript_dir
           case self.behavior
           when :invoke
@@ -38,6 +33,10 @@ module ReactParticles
             `rm -rf #{javascript_dir_path}`
             puts indent_str("removed ".red) + "#{javascript_dir_path}/*"
           end
+        end
+
+        def run_react_src_generator
+          call_generator("react_particles:install:react:src", "--namespace", namespace)
         end
 
         def generate_package_json_file_in_namespaced_javascript_dir
