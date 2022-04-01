@@ -37,7 +37,16 @@ module ReactParticles
         call_generator("react_particles:install:assets")
       end
 
-      def run_react_src_generator
+      def run_install_start_generator
+        call_generator("react_particles:install:start", "--namespace", namespace)
+      end
+
+
+############################################################
+#############################  ***************  React shizzz
+#############################  ***************  React shizzz
+#############################  ***************  React shizzz
+      def run_react_src_generator # should be in lib/generators/react_particles/install/react/react_generator.rb
         call_generator("react_particles:install:react:src", "--namespace", namespace)
       end
 
@@ -45,9 +54,15 @@ module ReactParticles
         call_generator("react_particles:install:react", "--namespace", namespace)
       end
 
-      def run_install_start_generator
-        call_generator("react_particles:install:start", "--namespace", namespace)
+      def run_install_jsbundling_rake_task_generator
+        call_generator("react_particles:jsbundling:install_rake_tasks", "--namespace", namespace, "--js_bundler", js_bundler)
       end
+############################################################
+############################################################
+############################################################
+
+
+
 
       def generate_react_application_controller
         react_application_controller_template_file = "application_controller.rb.erb"
