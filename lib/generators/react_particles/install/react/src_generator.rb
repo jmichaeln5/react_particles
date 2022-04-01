@@ -1,6 +1,5 @@
 require "rails/generators/base"
 require "react_particles/generator_helpers"
-require "react_particles/namespace"
 
 module ReactParticles
   module Generators

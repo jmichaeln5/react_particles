@@ -47,10 +47,6 @@ module ReactParticles
 #############################  ***************  React shizzz
 #############################  ***************  React shizzz
 #############################  ***************  React shizzz
-      def run_react_src_generator # should be in lib/generators/react_particles/install/react/react_generator.rb
-        call_generator("react_particles:install:react:src", "--namespace", namespace)
-      end
-
       def run_react_generator
         call_generator("react_particles:install:react", "--namespace", namespace)
       end
