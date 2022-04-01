@@ -16,6 +16,7 @@ module ReactParticles
 
         def copy_react_particles_output_js_bundler_rake
           output_js_bundler_tt = "output_js_bundler.html.erb"
+          output_js_bundler_path = "#{app_react_particles_rake_tasks_dir}/output_js_bundler.rake"
           case self.behavior
           when :invoke
             template(
@@ -23,12 +24,12 @@ module ReactParticles
               output_js_bundler_path,
             )
           when :revoke
-            `rm #{output_js_bundler_path}` if (File.exists? output_js_bundler_path)
-            puts indent_str("removed ".red) + "#{output_js_bundler_path}" if (File.exists? output_js_bundler_path)
-
-            if (Dir.exists? app_react_particles_rake_tasks_dir) and Dir.empty?(app_react_particles_rake_tasks_dir)
-              puts indent_str("removed ".red) + "#{app_react_particles_rake_tasks_dir}"
-              `rm -rf #{app_react_particles_rake_tasks_dir}`
+            if Rails.root.join(output_js_bundler_path).exist?
+              `rm #{output_js_bundler_path}`
+              puts indent_str("removed ".red) + "#{output_js_bundler_path}"
+              `rm -rf #{app_react_particles_rake_tasks_dir}` if (Dir.exists? app_react_particles_rake_tasks_dir) and (Dir.empty? app_react_particles_rake_tasks_dir)
+            else
+              raise "\n\nreact_particles:jsbundling-rails: Command failed\n\nfile does not exist: \n #{output_js_bundler_path}\n\n"
             end
           end
         end
@@ -37,10 +38,6 @@ module ReactParticles
 
           def app_react_particles_rake_tasks_dir
             return "lib/tasks/react_particles"
-          end
-
-          def output_js_bundler_path
-            return "#{app_react_particles_rake_tasks_dir}/output_js_bundler.rake"
           end
 
           def namespace
