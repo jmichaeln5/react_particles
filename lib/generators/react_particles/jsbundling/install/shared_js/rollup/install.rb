@@ -1,5 +1,5 @@
 say "Install rollup with config"
-copy_file "#{__dir__}/rollup.config.js", "rollup.config.js"
+# copy_file "#{__dir__}/rollup.config.js", "rollup.config.js"
 run "yarn add rollup @rollup/plugin-node-resolve"
 
 say "Add build script"
