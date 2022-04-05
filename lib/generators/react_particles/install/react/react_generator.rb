@@ -48,47 +48,33 @@ module ReactParticles
           call_generator("react_particles:jsbundling:install:package_json", "--namespace", namespace)
         end
 
-        def run_js_bundler_generator
-          call_generator("react_particles:jsbundling:install:bundler", "--namespace", namespace, "--js_bundler", js_bundler)
+        # def run_js_bundler_generator
+        #   call_generator("react_particles:jsbundling:install:bundler", "--namespace", namespace, "--js_bundler", js_bundler)
+        # end
+
+
+
+
+        def install_react_es_build_with_yarn
+          generated_react_application_package_json_file_path = "#{javascript_dir_path}/package.json"
+
+          case self.behavior
+          when :invoke
+            if ( generated_json_file_path = Rails.root.join(generated_react_application_package_json_file_path)).exist?
+              Dir.chdir "#{javascript_dir_path}" do
+                  system 'yarn add react react-dom esbuild'
+                  system 'yarn run build'
+              end
+            end
+          when :revoke
+            if ( generated_json_file_path = Rails.root.join(generated_react_application_package_json_file_path)).exist?
+              Dir.chdir "#{javascript_dir_path}" do
+                  system 'yarn remove react react-dom esbuild'
+              end
+              `rm -rf #{javascript_dir_path}`
+            end
+          end
         end
-
-        # def generate_package_json_file_in_namespaced_javascript_dir
-        #   react_application_package_json_template_file = "package_json_template.json.erb"
-        #   generated_react_application_package_json_file_path = "#{javascript_dir_path}/package.json"
-        #
-        #   case self.behavior
-        #   when :invoke
-        #     template(
-        #       react_application_package_json_template_file,
-        #       generated_react_application_package_json_file_path,
-        #     )
-        #   when :revoke
-        #     puts indent_str("removed ".red) + generated_react_application_package_json_file_path
-        #     `rm -rf #{javascript_dir_path}`
-        #   end
-        # end
-        #
-
-        # def install_react_es_build_with_yarn
-        #   generated_react_application_package_json_file_path = "#{javascript_dir_path}/package.json"
-        #
-        #   case self.behavior
-        #   when :invoke
-        #     if ( generated_json_file_path = Rails.root.join(generated_react_application_package_json_file_path)).exist?
-        #       Dir.chdir "#{javascript_dir_path}" do
-        #           system 'yarn add react react-dom esbuild'
-        #           system 'yarn run build'
-        #       end
-        #     end
-        #   when :revoke
-        #     if ( generated_json_file_path = Rails.root.join(generated_react_application_package_json_file_path)).exist?
-        #       Dir.chdir "#{javascript_dir_path}" do
-        #           system 'yarn remove react react-dom esbuild'
-        #       end
-        #       `rm -rf #{javascript_dir_path}`
-        #     end
-        #   end
-        # end
         #
         def add_node_modules_to_git_ignore
           react_particles_node_modules = "#{javascript_dir_path}/node_modules"

@@ -13,7 +13,7 @@ module ReactParticles
           class_option :namespace, type: :string, default: "react_application"
           class_option :js_bundler, type: :string, default: "esbuild"
 
-          def ensure_package_json # allows generator to run alone
+          def ensure_previous_generator
             unless (Rails.root.join(generated_react_application_package_json_file_path).exist?)
               call_generator("react_particles:jsbundling:install:package_json", "--namespace", namespace)
             end
@@ -43,7 +43,7 @@ module ReactParticles
                 )
               end
 
-              byebug
+              # byebug
 
                 Dir.chdir "#{javascript_dir_path}" do
                   puts "Installing #{js_bundler}...\n\n"

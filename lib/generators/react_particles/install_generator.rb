@@ -43,24 +43,6 @@ module ReactParticles
       end
 
 
-############################################################
-#############################  ***************  React shizzz
-#############################  ***************  React shizzz
-#############################  ***************  React shizzz
-      def run_react_generator
-        call_generator("react_particles:install:react", "--namespace", namespace)
-      end
-
-      def run_install_jsbundling_rake_task_generator
-        call_generator("react_particles:jsbundling:install_rake_tasks", "--namespace", namespace, "--js_bundler", js_bundler)
-      end
-############################################################
-############################################################
-############################################################
-
-
-
-
       def generate_react_application_controller
         react_application_controller_template_file = "application_controller.rb.erb"
         generated_react_application_controller_file_path = "app/controllers/#{namespace}/application_controller.rb"
@@ -139,6 +121,24 @@ module ReactParticles
 
         Rails.application.reload_routes!
       end
+
+
+
+      ############################################################
+      #############################  ***************  React shizzz
+      #############################  ***************  React shizzz
+      #############################  ***************  React shizzz
+            def run_react_generator
+              call_generator("react_particles:install:react", "--namespace", namespace)
+            end
+
+            def run_install_jsbundling_rake_task_generator
+              call_generator("react_particles:jsbundling:install_rake_tasks", "--namespace", namespace, "--js_bundler", js_bundler)
+            end
+      ############################################################
+      ############################################################
+      ############################################################
+
 
       def show_readme
         readme "README" if behavior == :invoke

@@ -1,5 +1,5 @@
 require "rails/generators/base"
-require "react_particles/generator_helpers"
+# require "react_particles/generator_helpers"
 require 'fileutils'
 
 module ReactParticles
@@ -7,7 +7,8 @@ module ReactParticles
     module Jsbundling
       module Install
         class SharedJsGenerator < Rails::Generators::Base
-        include ReactParticles::GeneratorHelpers
+        # include ReactParticles::GeneratorHelpers
+        include Rails::Generators
 
         source_root File.expand_path("../shared_js", __FILE__)
 
@@ -17,26 +18,33 @@ module ReactParticles
         ### NOTE Allows for generator to be ran as standalone generator
         ### Duplicated from:
         ### lib/generators/react_particles/jsbundling/install/shared_js_generator.rb
-        APP_ASSETS_CONFIG_DIR = "app/assets/config"
-        APP_ASSETS_JAVASCRIPTS_DIR = "app/assets/javascripts"
+        # APP_ASSETS_CONFIG_DIR = "app/assets/config"
+        # APP_ASSETS_JAVASCRIPTS_DIR = "app/assets/javascripts"
+        #
+        # APP_ASSETS_JAVASCRIPTS_REACT_PARTICLES_DIR = "#{APP_ASSETS_JAVASCRIPTS_DIR}/react_particles"
+        # REACT_PARTICLES_APP_JS_FILE = "#{APP_ASSETS_JAVASCRIPTS_REACT_PARTICLES_DIR}/application.js"
+        # REACT_PARTICLES_MANIFEST_JS_FILE = "#{APP_ASSETS_CONFIG_DIR}/react_particles_manifest.js"
 
-        APP_ASSETS_JAVASCRIPTS_REACT_PARTICLES_DIR = "#{APP_ASSETS_JAVASCRIPTS_DIR}/react_particles"
-        REACT_PARTICLES_APP_JS_FILE = "#{APP_ASSETS_JAVASCRIPTS_REACT_PARTICLES_DIR}/application.js"
-        REACT_PARTICLES_MANIFEST_JS_FILE = "#{APP_ASSETS_CONFIG_DIR}/react_particles_manifest.js"
-
-        def ensure_react_app_assets
-          unless(
-          (Dir.exists? APP_ASSETS_CONFIG_DIR) and
-          (Dir.exists? APP_ASSETS_JAVASCRIPTS_DIR) and
-          (Dir.exists? APP_ASSETS_JAVASCRIPTS_REACT_PARTICLES_DIR) and
-          (Dir.exists? REACT_PARTICLES_APP_JS_FILE) and
-          (Dir.exists? REACT_PARTICLES_MANIFEST_JS_FILE)
-          )
-            call_generator("react_particles:install:assets")
+        def ensure_js_assets
+          # unless(
+          # (Dir.exists? APP_ASSETS_CONFIG_DIR) and
+          # (Dir.exists? APP_ASSETS_JAVASCRIPTS_DIR) and
+          # (Dir.exists? APP_ASSETS_JAVASCRIPTS_REACT_PARTICLES_DIR) and
+          # (Dir.exists? REACT_PARTICLES_APP_JS_FILE) and
+          # (Dir.exists? REACT_PARTICLES_MANIFEST_JS_FILE)
+          # )
+            # call_generator("react_particles:install:assets")
+          # end
+          case self.behavior
+          when :invoke
+            system `rails g react_particles:install:assets --namespace=#{namespace} --js_bundler=#{js_bundler}`
+          when :revoke
+            system `rails g react_particles:install:assets`
           end
+
         end
 
-        def ensure_procfile
+        def copy_procfile
           template_file = "Procfile.dev"
           template_target = "/Procfile.dev"
 
@@ -144,6 +152,10 @@ module ReactParticles
         end
 
         private
+
+          def call_generator(generator, *args)
+            Rails::Generators.invoke(generator, args, generator_options)
+          end
 
           def namespace
             options[:namespace]
