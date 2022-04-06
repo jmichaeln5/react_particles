@@ -52,9 +52,9 @@ module ReactParticles
         #   call_generator("react_particles:jsbundling:install:bundler", "--namespace", namespace, "--js_bundler", js_bundler)
         # end
 
-        ################ NOTE refactoring into seperate generators to allow devs to choose js bundler(esbuild, rollup, webpack)
-        ################ NOTE refactoring into seperate generators to allow devs to choose js bundler(esbuild, rollup, webpack)
-        ################ NOTE refactoring into seperate generators to allow devs to choose js bundler(esbuild, rollup, webpack)
+################ NOTE refactoring into seperate generators to allow devs to choose js bundler(esbuild, rollup, webpack)
+################ NOTE refactoring into seperate generators to allow devs to choose js bundler(esbuild, rollup, webpack)
+################ NOTE refactoring into seperate generators to allow devs to choose js bundler(esbuild, rollup, webpack)
         def generate_package_json_file_in_namespaced_javascript_dir
           react_application_package_json_template_file = "package_json_template.json.erb"
           generated_react_application_package_json_file_path = "#{javascript_dir_path}/package.json"
@@ -93,9 +93,9 @@ module ReactParticles
             end
           end
         end
-        #######################################################################################################################
-        #######################################################################################################################
-        #######################################################################################################################
+#######################################################################################################################
+#######################################################################################################################
+#######################################################################################################################
 
         def add_node_modules_to_git_ignore
           react_particles_node_modules = "#{javascript_dir_path}/node_modules"
