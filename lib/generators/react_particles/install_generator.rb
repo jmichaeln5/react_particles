@@ -120,7 +120,7 @@ module ReactParticles
 ############################################################
 #############################  ***************  React shizzz
             def run_react_generator
-              call_generator("react_particles:install:react", "--namespace", namespace)
+              call_generator("react_particles:install:react", "--namespace", namespace,  "--js_bundler", js_bundler)
             end
 
             def run_install_jsbundling_rake_task_generator
