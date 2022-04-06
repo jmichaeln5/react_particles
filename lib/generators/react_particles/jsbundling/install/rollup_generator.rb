@@ -14,24 +14,33 @@ module ReactParticles
           class_option :js_bundler, type: :string, default: "rollup"
 
           def ensure_react_particle_assets
-            call_generator("react_particles:install:assets")
-
-            react_particles_builds_dir = "app/assets/react_particles/builds/"
+            react_particles_builds_dir = "app/assets/react_particles/builds"
             react_particles_builds_keep = "app/assets/react_particles/builds/.keep"
+            react_app_js = "#{javascript_dir_path}/application.js"
 
-            unless Rails.root.join(react_particles_builds_dir).exist?
-              `mkdir #{react_particles_builds_dir}`
-              `touch #{react_particles_builds_keep}`
+            case self.behavior
+            when :invoke
+              call_generator("react_particles:install:assets")
+
+              `mkdir #{Rails.root.join(react_particles_builds_dir)}` unless Rails.root.join(react_particles_builds_dir).exist?
+              `touch #{Rails.root.join(react_particles_builds_keep)}` unless Rails.root.join(react_particles_builds_keep).exist?
+              `touch #{Rails.root.join(react_app_js)}` unless Rails.root.join(react_app_js).exist?
+
+            when :revoke
+
+              `rm #{react_particles_builds_keep}` if Rails.root.join(react_particles_builds_keep).exist?
+              `rm -rf #{react_particles_builds_dir}` if (Dir.exists? react_particles_builds_dir) and (Dir.empty? react_particles_builds_dir)
+              `rm #{react_app_js}` if Rails.root.join(react_app_js).exist?
+
             end
           end
 
           def ensure_javascript_dir_path
             unless Rails.root.join(javascript_dir_path).exist?
               `mkdir #{javascript_dir_path}`
-              `touch #{javascript_dir_path}/application.js`
             end
           end
-
+          
           def create_package_json
             if self.behavior == :invoke
               rollup_package_json = "#{javascript_dir_path}/package.json"

@@ -22,11 +22,9 @@ module ReactParticles
             when :invoke
               call_generator("react_particles:install:assets")
 
-              unless Rails.root.join(react_particles_builds_dir).exist?
-                `mkdir #{react_particles_builds_dir}`
-                `touch #{react_particles_builds_keep}`
-                `touch #{react_app_js}` unless Rails.root.join(react_app_js).exist?
-              end
+              `mkdir #{Rails.root.join(react_particles_builds_dir)}` unless Rails.root.join(react_particles_builds_dir).exist?
+              `touch #{Rails.root.join(react_particles_builds_keep)}` unless Rails.root.join(react_particles_builds_keep).exist?
+              `touch #{Rails.root.join(react_app_js)}` unless Rails.root.join(react_app_js).exist?
 
             when :revoke
               `rm #{react_particles_builds_keep}` if Rails.root.join(react_particles_builds_keep).exist?
@@ -84,7 +82,7 @@ module ReactParticles
           # end
 ######### NOTE CHOOSE WHICH STYLE OF INSTALL, USE AMONGST ALL JSBUNDLER INSTALL GENERATORS
 ############## Installs esbuild with jsbundling install script and manually configured JSON
-          def create_package_json
+          def generate_package_json
             template_file = "#{javascript_dir_path}/package.json"
 
             case self.behavior
