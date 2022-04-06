@@ -9,11 +9,14 @@ module ReactParticles
           include ReactParticles::GeneratorHelpers
 
           APP_ASSETS_CONFIG_DIR = "app/assets/config"
+
           APP_ASSETS_JAVASCRIPTS_DIR = "app/assets/javascripts"
 
-          APP_ASSETS_JAVASCRIPTS_REACT_PARTICLES_DIR = "#{APP_ASSETS_JAVASCRIPTS_DIR}/react_particles"
-          REACT_PARTICLES_APP_JS_FILE = "#{APP_ASSETS_JAVASCRIPTS_REACT_PARTICLES_DIR}/application.js"
-          REACT_PARTICLES_MANIFEST_JS_FILE = "#{APP_ASSETS_CONFIG_DIR}/react_particles_manifest.js"
+          APP_ASSETS_JAVASCRIPTS_REACT_PARTICLES_DIR = "app/assets/javascripts/react_particles"
+
+          REACT_PARTICLES_APP_JS_FILE = "app/assets/javascripts/react_particles/application.js"
+
+          REACT_PARTICLES_MANIFEST_JS_FILE = "app/assets/config/react_particles_manifest.js"
 
           def generate_react_particles_assets_javascripts_dir
             case self.behavior

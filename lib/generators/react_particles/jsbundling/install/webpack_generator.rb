@@ -33,15 +33,15 @@ module ReactParticles
           end
 
           def create_package_json
-            if self.behavior == :invoke
+            if behavior == :invoke
               webpack_package_json = "#{javascript_dir_path}/package.json"
               `touch #{webpack_package_json}`
 
-              webpack_config_json ="
-              \n{" +
-              "\n  \"name\": \"#{namespace}\", " +
-              "\n  \"private\": \"true\"" +
-              "\n}"
+              webpack_config_json =
+                %( { ) +
+                %(\n  "name": "app", ) +
+                %(\n  "private": "true" ) +
+                %(\n} )
 
               append_to_file(
                 webpack_package_json,
@@ -51,7 +51,7 @@ module ReactParticles
           end
 
           def install_js_bundler
-            if self.behavior == :invoke
+            if behavior == :invoke
               ### Install Script from jsbundling-rails 👇🏾
               ### /jsbundling-rails/lib/install/webpack/install.rb
               puts "\nInstall webpack with config"
@@ -102,10 +102,10 @@ module ReactParticles
           end
 
           def revoke_callbacks
-            if self.behavior == :revoke
+            if behavior == :revoke
 
               chdir javascript_dir_path do
-                run "yarn remove webpack @webpack/plugin-node-resolve"
+                run "yarn remove webpack webpack-cli"
                 run "rm #{javascript_dir_path}/webpack.config.js"
                 if (
                   Dir.exists? javascript_dir_path) and
