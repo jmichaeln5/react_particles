@@ -1,6 +1,5 @@
 require "rails/generators/base"
 require "react_particles/generator_helpers"
-require 'json'
 
 module ReactParticles
   module Generators
@@ -13,7 +12,6 @@ module ReactParticles
 
           class_option :namespace, type: :string, default: "react_application"
           class_option :js_bundler, type: :string, default: "rollup"
-
 
           def ensure_react_particle_assets
             call_generator("react_particles:install:assets")
