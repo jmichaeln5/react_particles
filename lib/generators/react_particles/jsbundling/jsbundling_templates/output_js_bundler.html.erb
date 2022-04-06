@@ -2,9 +2,12 @@ namespace :react_particles do
   namespace :javascript do
     desc "Returns JavaScript bundler used by React Particles"
     task :output_js_bundler do
-      return "<%="#{js_bundler}" %>"
+      @js_bundler = "<%="#{js_bundler}" %>"
+      @namespace = "<%="#{namespace}" %>"
+
     end
   end
 end
 
-puts "React Particles bundled with <%="#{js_bundler}" %>"
+puts "React Particles bundled with: <%= js_bundler %>"
+puts "React Particles namespace: <%= namespace %>"

@@ -25,28 +25,28 @@ module ReactParticles
         # REACT_PARTICLES_APP_JS_FILE = "#{APP_ASSETS_JAVASCRIPTS_REACT_PARTICLES_DIR}/application.js"
         # REACT_PARTICLES_MANIFEST_JS_FILE = "#{APP_ASSETS_CONFIG_DIR}/react_particles_manifest.js"
 
-        def ensure_js_assets
-          # unless(
-          # (Dir.exists? APP_ASSETS_CONFIG_DIR) and
-          # (Dir.exists? APP_ASSETS_JAVASCRIPTS_DIR) and
-          # (Dir.exists? APP_ASSETS_JAVASCRIPTS_REACT_PARTICLES_DIR) and
-          # (Dir.exists? REACT_PARTICLES_APP_JS_FILE) and
-          # (Dir.exists? REACT_PARTICLES_MANIFEST_JS_FILE)
-          # )
-            # call_generator("react_particles:install:assets")
-          # end
-          case self.behavior
-          when :invoke
-            system `rails g react_particles:install:assets --namespace=#{namespace} --js_bundler=#{js_bundler}`
-          when :revoke
-            system `rails g react_particles:install:assets`
-          end
-
-        end
+        # def ensure_js_assets
+        #   # unless(
+        #   # (Dir.exists? APP_ASSETS_CONFIG_DIR) and
+        #   # (Dir.exists? APP_ASSETS_JAVASCRIPTS_DIR) and
+        #   # (Dir.exists? APP_ASSETS_JAVASCRIPTS_REACT_PARTICLES_DIR) and
+        #   # (Dir.exists? REACT_PARTICLES_APP_JS_FILE) and
+        #   # (Dir.exists? REACT_PARTICLES_MANIFEST_JS_FILE)
+        #   # )
+        #     # call_generator("react_particles:install:assets")
+        #   # end
+        #   case self.behavior
+        #   when :invoke
+        #     system `rails g react_particles:install:assets --namespace=#{namespace} --js_bundler=#{js_bundler}`
+        #   when :revoke
+        #     system `rails g react_particles:install:assets`
+        #   end
+        # end
 
         def copy_procfile
           template_file = "Procfile.dev"
-          template_target = "/Procfile.dev"
+          # template_target = "/Procfile.dev"
+          template_target = "#{javascript_dir_path}/Procfile.dev"
 
           case self.behavior
           when :invoke

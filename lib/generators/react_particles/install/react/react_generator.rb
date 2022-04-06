@@ -40,27 +40,43 @@ module ReactParticles
           call_generator("react_particles:install:react:src", "--namespace", namespace)
         end
 
-        def run_shared_js_generator
-          call_generator("react_particles:jsbundling:install:shared_js", "--namespace", namespace, "--js_bundler", js_bundler)
-        end
+        # def run_shared_js_generator
+        #   call_generator("react_particles:jsbundling:install:shared_js", "--namespace", namespace, "--js_bundler", js_bundler)
+        # end
 
-        def run_package_json_generator
-          call_generator("react_particles:jsbundling:install:package_json", "--namespace", namespace)
-        end
+        # def run_package_json_generator
+        #   call_generator("react_particles:jsbundling:install:package_json", "--namespace", namespace)
+        # end
 
         # def run_js_bundler_generator
         #   call_generator("react_particles:jsbundling:install:bundler", "--namespace", namespace, "--js_bundler", js_bundler)
         # end
 
 
+        def generate_package_json_file_in_namespaced_javascript_dir
+          react_application_package_json_template_file = "package_json_template.json.erb"
+          generated_react_application_package_json_file_path = "#{javascript_dir_path}/package.json"
 
+          case self.behavior
+          when :invoke
+            unless (Rails.root.join(react_application_package_json_template_file)).exist?
+              template(
+                react_application_package_json_template_file,
+                generated_react_application_package_json_file_path,
+              )
+            end
+          when :revoke
+            puts indent_str("removed ".red) + generated_react_application_package_json_file_path
+            `rm -rf #{javascript_dir_path}`
+          end
+        end
 
         def install_react_es_build_with_yarn
           generated_react_application_package_json_file_path = "#{javascript_dir_path}/package.json"
 
           case self.behavior
           when :invoke
-            if ( generated_json_file_path = Rails.root.join(generated_react_application_package_json_file_path)).exist?
+            if (Rails.root.join(generated_react_application_package_json_file_path)).exist?
               Dir.chdir "#{javascript_dir_path}" do
                   system 'yarn add react react-dom esbuild'
                   system 'yarn run build'
@@ -71,11 +87,11 @@ module ReactParticles
               Dir.chdir "#{javascript_dir_path}" do
                   system 'yarn remove react react-dom esbuild'
               end
-              `rm -rf #{javascript_dir_path}`
+              `rm -rf #{javascript_dir_path}` if (Dir.exists? javascript_dir_path) and (Dir.empty? javascript_dir_path)
             end
           end
         end
-        #
+
         def add_node_modules_to_git_ignore
           react_particles_node_modules = "#{javascript_dir_path}/node_modules"
 

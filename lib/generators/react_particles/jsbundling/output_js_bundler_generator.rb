@@ -8,6 +8,7 @@ module ReactParticles
         include ReactParticles::GeneratorHelpers
         source_root File.expand_path("../jsbundling_templates", __FILE__)
 
+        class_option :namespace, type: :string, default: "react_application"
         class_option :js_bundler, type: :string, default: "esbuild"
 
         BUNDLER_OPTIONS = ['rollup', 'webpack', 'esbuild']
@@ -37,6 +38,10 @@ module ReactParticles
 
           def app_react_particles_rake_tasks_dir
             return "lib/tasks/react_particles"
+          end
+
+          def namespace
+            options[:namespace]
           end
 
           def js_bundler

@@ -42,7 +42,6 @@ module ReactParticles
         call_generator("react_particles:install:start", "--namespace", namespace)
       end
 
-
       def generate_react_application_controller
         react_application_controller_template_file = "application_controller.rb.erb"
         generated_react_application_controller_file_path = "app/controllers/#{namespace}/application_controller.rb"

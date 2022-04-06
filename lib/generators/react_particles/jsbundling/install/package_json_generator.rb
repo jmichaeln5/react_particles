@@ -19,7 +19,6 @@ module ReactParticles
               end
           end
 
-
           def copy_package_json
             previous_working_directory = File.dirname(__FILE__)
 
