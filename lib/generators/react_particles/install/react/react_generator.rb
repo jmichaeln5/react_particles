@@ -53,6 +53,9 @@ module ReactParticles
         # end
 
 
+
+
+
         def generate_package_json_file_in_namespaced_javascript_dir
           react_application_package_json_template_file = "package_json_template.json.erb"
           generated_react_application_package_json_file_path = "#{javascript_dir_path}/package.json"
@@ -70,6 +73,11 @@ module ReactParticles
             `rm -rf #{javascript_dir_path}`
           end
         end
+
+
+
+
+
 
         def install_react_es_build_with_yarn
           generated_react_application_package_json_file_path = "#{javascript_dir_path}/package.json"
