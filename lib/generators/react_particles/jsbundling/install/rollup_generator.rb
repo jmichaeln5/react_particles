@@ -13,35 +13,36 @@ module ReactParticles
           class_option :namespace, type: :string, default: "react_application"
           class_option :js_bundler, type: :string, default: "rollup"
 
-          def ensure_react_particles_js
-            call_generator("react_particles:install:assets")
-          end
-
-          # def ensure_javascript_dir_path
-          #   unless Rails.root.join(javascript_dir_path).exist?
-          #     `mkdir #{javascript_dir_path}`
-          #     `touch #{javascript_dir_path}/application.js`
-          #   end
+          # def ensure_react_particles_js
+          #   call_generator("react_particles:install:assets")
           # end
+
+          def ensure_javascript_dir_path
+            unless Rails.root.join(javascript_dir_path).exist?
+              # `mkdir #{javascript_dir_path}`
+              # `touch #{javascript_dir_path}/application.js`
+                call_generator("react_particles:install:assets")
+            end
+          end
 
           def install_js_bundler
             if self.behavior == :invoke
 
               # Install Script 👇🏾
-              puts "\nInstall rollup with config"
+              puts "\nInstall #{js_bundler} with config"
 
-              rollup_config_file = "#{javascript_dir_path}/rollup.config.js"
-              `touch #{rollup_config_file}`
+              bundler_config_file = "#{javascript_dir_path}/#{js_bundler}.config.js"
+              `touch #{bundler_config_file}`
 
-              rollup_config_input = "./application.js"
-              rollup_output_file = "app/assets/javascripts/react_particles/application.js" # BG
+              bundler_config_input_path = "./application.js"
+              bundler_config_output_path = "app/assets/javascripts/react_particles/application.js" # BG
 
-              rollup_config_json = "\n" +
+              bundler_config_content = "\n" +
               "\nimport resolve from \"@rollup/plugin-node-resolve\"" +
               "\n\nexport default {" +
-              "\n  input: \"#{rollup_config_input}\"," +
+              "\n  input: \"#{bundler_config_input_path}\"," +
               "\n  output: {" +
-              "\n    file: \"#{rollup_output_file}\"," +
+              "\n    file: \"#{bundler_config_output_path}\"," +
               "\n    format: \"es\"," +
               "\n    inlineDynamicImports: true," +
               "\n    sourcemap: true" +
@@ -52,8 +53,8 @@ module ReactParticles
               "\n}"
 
               append_to_file(
-                rollup_config_file,
-                rollup_config_json,
+                bundler_config_file,
+                bundler_config_content,
               )
 
               install_script = File.expand_path("../rollup_templates/install.rb", __FILE__)
@@ -61,19 +62,15 @@ module ReactParticles
 
               Dir.chdir(javascript_dir_path) do
                 # Install Script 👇🏾
-                system "yarn add rollup"
-                system "yarn add @rollup/plugin-node-resolve"
-                system "yarn add rollup-plugin-jsx"
+                system "yarn add rollup @rollup/plugin-node-resolve"
+                # system "yarn add rollup"
+                # system "yarn add @rollup/plugin-node-resolve"
+                # system "yarn add rollup-plugin-jsx"
                 # system "yarn add @rollup/plugin-typescript"
-
-
-
                 system "ruby #{install_script}"
               end
             end
           end
-
-
 
           def revoke_callbacks
             if self.behavior == :revoke
@@ -130,10 +127,13 @@ module ReactParticles
           #       `rm #{bundler_config_file}`
           #     end
           # end
-
-
-
+          #
+          #
+          #
           # def install_js_bundler
+          #   install_script = File.expand_path("../rollup_templates/install.rb", __FILE__)
+          #
+          #
           #   Dir.chdir(javascript_dir_path) do
           #     case self.behavior
           #     when :invoke

@@ -13,41 +13,47 @@ module ReactParticles
           class_option :namespace, type: :string, default: "react_application"
           class_option :js_bundler, type: :string, default: "esbuild"
 
-          def ensure_js_assets
-            javascripts_react_particles = "app/assets/javascripts/react_particles"
-            bundler_outfile = "app/assets/javascripts/react_particles/application.js"
-            if behavior == :invoke
-              unless (
-                Rails.root.join(javascripts_react_particles).exist? and Rails.root.join(bundler_outfile).exist?
-              )
-                call_generator("react_particles:install:assets:javascripts")
-              end
-            end
-          end
+          # def ensure_js_assets
+          #   javascripts_react_particles = "app/assets/javascripts/react_particles"
+          #   bundler_outfile = "app/assets/javascripts/react_particles/application.js"
+          #   if behavior == :invoke
+          #     unless (
+          #       Rails.root.join(javascripts_react_particles).exist? and Rails.root.join(bundler_outfile).exist?
+          #     )
+          #       call_generator("react_particles:install:assets:javascripts")
+          #     end
+          #   end
+          # end
 
-          def generate_app_js_dir
-            app_js_dir = "#{javascript_dir_path}"
-            if behavior == :invoke
-              unless Rails.root.join(app_js_dir).exist?
-                system `mkdir -p #{app_js_dir}`
-              end
-            end
-          end
-
-          def generate_app_js_entrypoint_path
-            react_app_js_file = "#{javascript_dir_path}/application.js"
-
-            case self.behavior
-            when :invoke
-              unless Rails.root.join(react_app_js_file).exist?
-                system `touch #{react_app_js_file}`
-              end
-            when :revoke
-              if Rails.root.join(react_app_js_file).exist?
-                system `rm #{react_app_js_file}`
-              end
-            end
-          end
+          # def generate_app_js_dir
+          #   react_app_js_dir = "#{javascript_dir_path}"
+          #
+          #   case self.behavior
+          #   when :invoke
+          #     unless Rails.root.join(react_app_js_dir).exist?
+          #       system `mkdir #{react_app_js_dir}`
+          #     end
+          #   when :revoke
+          #     if Rails.root.join(react_app_js_dir).exist?
+          #       system `rmdir #{react_app_js_dir}`
+          #     end
+          #   end
+          # end
+          #
+          # def generate_app_js_entrypoint_path
+          #   react_app_js_file = "#{javascript_dir_path}/application.js"
+          #
+          #   case self.behavior
+          #   when :invoke
+          #     unless Rails.root.join(react_app_js_file).exist?
+          #       system `touch #{react_app_js_file}`
+          #     end
+          #   when :revoke
+          #     if Rails.root.join(react_app_js_file).exist?
+          #       system `rm #{react_app_js_file}`
+          #     end
+          #   end
+          # end
 
           def generate_package_json
             template_file = "#{javascript_dir_path}/package.json"

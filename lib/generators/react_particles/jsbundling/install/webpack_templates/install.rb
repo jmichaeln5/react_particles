@@ -1,4 +1,4 @@
-puts "Install Webpack with config"
+# puts "Install Webpack with config"
 
 system "yarn add webpack webpack-cli"
 

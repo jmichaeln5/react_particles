@@ -138,7 +138,7 @@ module ReactParticles
             # end
 
             def run_install_start_generator
-              call_generator("react_particles:install:start", "--namespace", namespace)
+              call_generator("react_particles:install:start", "--namespace", namespace,  "--js_bundler", js_bundler)
             end
 ############################################################
 
