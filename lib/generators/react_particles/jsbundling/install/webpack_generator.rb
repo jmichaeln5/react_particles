@@ -13,56 +13,56 @@ module ReactParticles
           class_option :namespace, type: :string, default: "react_application"
           class_option :js_bundler, type: :string, default: "webpack"
 
-          def ensure_react_particle_assets
-            react_particles_builds_dir = "app/assets/react_particles/builds"
-            react_particles_builds_keep = "app/assets/react_particles/builds/.keep"
-            react_app_js = "#{javascript_dir_path}/application.js"
+          # def ensure_react_particle_assets
+          #   react_particles_builds_dir = "app/assets/react_particles/builds"
+          #   react_particles_builds_keep = "app/assets/react_particles/builds/.keep"
+          #   react_app_js = "#{javascript_dir_path}/application.js"
+          #
+          #   case self.behavior
+          #   when :invoke
+          #     call_generator("react_particles:install:assets")
+          #
+          #     `mkdir #{Rails.root.join(react_particles_builds_dir)}` unless Rails.root.join(react_particles_builds_dir).exist?
+          #     `touch #{Rails.root.join(react_particles_builds_keep)}` unless Rails.root.join(react_particles_builds_keep).exist?
+          #     `touch #{Rails.root.join(react_app_js)}` unless Rails.root.join(react_app_js).exist?
+          #
+          #   when :revoke
+          #
+          #     `rm #{react_particles_builds_keep}` if Rails.root.join(react_particles_builds_keep).exist?
+          #     `rm -rf #{react_particles_builds_dir}` if (Dir.exists? react_particles_builds_dir) and (Dir.empty? react_particles_builds_dir)
+          #     `rm #{react_app_js}` if Rails.root.join(react_app_js).exist?
+          #
+          #   end
+          # end
 
-            case self.behavior
-            when :invoke
-              call_generator("react_particles:install:assets")
+          # def ensure_javascript_dir_path
+          #   unless Rails.root.join(javascript_dir_path).exist?
+          #     `mkdir #{javascript_dir_path}`
+          #   end
+          # end
 
-              `mkdir #{Rails.root.join(react_particles_builds_dir)}` unless Rails.root.join(react_particles_builds_dir).exist?
-              `touch #{Rails.root.join(react_particles_builds_keep)}` unless Rails.root.join(react_particles_builds_keep).exist?
-              `touch #{Rails.root.join(react_app_js)}` unless Rails.root.join(react_app_js).exist?
-
-            when :revoke
-
-              `rm #{react_particles_builds_keep}` if Rails.root.join(react_particles_builds_keep).exist?
-              `rm -rf #{react_particles_builds_dir}` if (Dir.exists? react_particles_builds_dir) and (Dir.empty? react_particles_builds_dir)
-              `rm #{react_app_js}` if Rails.root.join(react_app_js).exist?
-
-            end
-          end
-
-          def ensure_javascript_dir_path
-            unless Rails.root.join(javascript_dir_path).exist?
-              `mkdir #{javascript_dir_path}`
-            end
-          end
-
-          def generate_package_json
-            template_file = "#{javascript_dir_path}/package.json"
-
-            case self.behavior
-            when :invoke
-              `touch #{template_file}` unless Rails.root.join(template_file).exist?
-
-              generated_template_file =
-                %( { ) +
-                %(\n  "name": "app", ) +
-                %(\n  "private": "true" ) +
-                %(\n} )
-
-              append_to_file(
-                template_file,
-                generated_template_file,
-              )
-            when :revoke
-              `rm #{template_file}` if (File.exists? template_file)
-              puts indent_str("removed ".red) + template_file
-            end
-          end
+          # def generate_package_json
+          #   template_file = "#{javascript_dir_path}/package.json"
+          #
+          #   case self.behavior
+          #   when :invoke
+          #     `touch #{template_file}` unless Rails.root.join(template_file).exist?
+          #
+          #     generated_template_file =
+          #       %( { ) +
+          #       %(\n  "name": "app", ) +
+          #       %(\n  "private": "true" ) +
+          #       %(\n} )
+          #
+          #     append_to_file(
+          #       template_file,
+          #       generated_template_file,
+          #     )
+          #   when :revoke
+          #     `rm #{template_file}` if (File.exists? template_file)
+          #     puts indent_str("removed ".red) + template_file
+          #   end
+          # end
 
           def install_js_bundler
             if behavior == :invoke
@@ -102,8 +102,6 @@ module ReactParticles
                 webpack_config_file,
                 webpack_config_json,
               )
-
-              install_script = File.expand_path("../webpack_templates/install.rb", __FILE__)
 
               Dir.chdir(javascript_dir_path) do
                 # Install Script from jsbundling-rails 👇🏾

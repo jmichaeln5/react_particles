@@ -5,6 +5,8 @@ puts "Add build script"
 
 # build_script = "esbuild app/javascript/*.* --bundle --sourcemap --outdir=app/assets/builds"   # OG
 
+# build_script = "esbuild --bundle ./application.js --outfile=../../assets/javascripts/react_particles/application.js"  # OBG
+
 build_script = "esbuild --bundle ./application.js --outfile=../../assets/javascripts/react_particles/application.js"  # BG
 
 
