@@ -25,25 +25,28 @@ Some notes before you get started:
 
   ***** DISPLAYING CHANGES *****
 
+  React Particles is built on top of the jsbundling-rails gem.
+
   Your JavaScript assets were bundled initially when running react_particles:install but,
 
   you MUST bundle your JavaScript AND precompile your assets after changes are made.
 
-  If you don't updates/changes will not be displayed so don't forget to do so before spinning up your server.
+  The following rake tasks have been added to lib/tasks/react_particles for this process.
 
-  To do this cd into the new JavaScript directory (app/javascript/react_application)
+  All are execution of commands are limited to React Particles but,
 
-  Then run:
-    $ yarn run build
+  are also executed when running javascript:[build | clobber] commands.
 
-    $ rake assets:precompile
+  $ rails react_particles:javascript:build
+    =>  'yarn build'
 
-  Finally:
+  $ rails react_particles:javascript:clobber
+    =>  'rm -rf app/assets/javascripts/react_particles'
 
-    $ rails s
+  $ rails react_particles:start
+    =>  'yarn build && rake assets:precompile && rails s'
 
-  Feel free to use an alias for productivity
+  Feel free to edit the generated rake tasks
 
-    $ alias react-particles-start='yarn run build && rake assets:precompile && rails s'
 
 =================================================================================================

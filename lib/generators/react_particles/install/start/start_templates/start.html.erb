@@ -9,7 +9,7 @@ namespace :react_particles do
     react_particles_js_root_path = "#{app_root_path}<%="/javascript/#{namespace}" %>"
 
     chdir react_particles_js_root_path do
-      system 'yarn run build && rake assets:precompile'
+      system 'yarn build && rake assets:precompile'
     end
 
     Dir.chdir(previous_working_directory)

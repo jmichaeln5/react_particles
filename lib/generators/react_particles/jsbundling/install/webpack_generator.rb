@@ -73,14 +73,16 @@ module ReactParticles
               run "yarn remove webpack webpack-cli"
               run "rm #{javascript_dir_path}/webpack.config.js"
 
-              Dir.chdir(javascript_dir_path) do
-                if (
-                  Dir.exists? javascript_dir_path) and
-                  (Dir.empty? javascript_dir_path
-                )
-                  `rm -rf #{javascript_dir_path}` if (Dir.exists? javascript_dir_path) and (Dir.empty? javascript_dir_path)
-                end
-              end
+              # Dir.chdir(javascript_dir_path) do
+              #   if (
+              #     Dir.exists? javascript_dir_path) and
+              #     (Dir.empty? javascript_dir_path
+              #   )
+              #   end
+              # end
+
+              `rm -rf #{javascript_dir_path}` if ((Dir.exists? javascript_dir_path) and (Dir.empty? javascript_dir_path))
+
 
             end
           end

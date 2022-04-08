@@ -46,13 +46,13 @@ module ReactParticles
           call_generator("react_particles:jsbundling:install:shared_js", "--namespace", namespace, "--js_bundler", js_bundler)
         end
 
-        # def run_js_bundler_generator
-        #   call_generator("react_particles:jsbundling:install:#{js_bundler}", "--namespace", namespace, "--js_bundler", js_bundler)
-        # end
-        #
-        # def run_react_src_generator
-        #   call_generator("react_particles:install:react:src", "--namespace", namespace)
-        # end
+        def run_js_bundler_generator
+          call_generator("react_particles:jsbundling:install:#{js_bundler}", "--namespace", namespace, "--js_bundler", js_bundler)
+        end
+
+        def run_react_src_generator
+          call_generator("react_particles:install:react:src", "--namespace", namespace)
+        end
 
         def install_react
           case self.behavior
@@ -75,13 +75,13 @@ module ReactParticles
           end
         end
 
-        def run_js_bundler_generator
-          call_generator("react_particles:jsbundling:install:#{js_bundler}", "--namespace", namespace, "--js_bundler", js_bundler)
-        end
-
-        def run_react_src_generator
-          call_generator("react_particles:install:react:src", "--namespace", namespace)
-        end
+        # def run_js_bundler_generator
+        #   call_generator("react_particles:jsbundling:install:#{js_bundler}", "--namespace", namespace, "--js_bundler", js_bundler)
+        # end
+        #
+        # def run_react_src_generator
+        #   call_generator("react_particles:install:react:src", "--namespace", namespace)
+        # end
 
         def run_install_jsbundling_rake_task_generator
           call_generator("react_particles:jsbundling:install_rake_tasks", "--namespace", namespace, "--js_bundler", js_bundler)
