@@ -15,6 +15,11 @@ if ActiveSupport::TestCase.respond_to?(:fixture_path=)
 end
 
 
+HOST_ROOT = File.expand_path("../../dummy", File.dirname(__FILE__))
+
+require "generators/react_particles/install_generator"
+
+
 ###################################################
 ###################################################
 #########       DEVISE TEST HELPERS       #########
