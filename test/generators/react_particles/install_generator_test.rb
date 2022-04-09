@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require "test_helper"
-require "#{ENGINE_PATH}"
 
 class ReactParticlesInstallGeneratorTest < Rails::Generators::TestCase
   tests ReactParticles::Generators::InstallGenerator
