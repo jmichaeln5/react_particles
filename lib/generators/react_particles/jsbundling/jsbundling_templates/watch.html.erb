@@ -1,0 +1,18 @@
+namespace :react_particles do
+  desc 'Build React Particles JS assets'
+  task :watch => :environment do
+
+    previous_working_directory = File.dirname(__FILE__)
+
+    app_root_path = File.expand_path('../../../app', __dir__)
+
+    react_particles_js_root_path = "#{app_root_path}<%="/javascript/#{namespace}" %>"
+
+    chdir react_particles_js_root_path do
+      system 'yarn build --watch'
+    end
+
+    Dir.chdir(previous_working_directory)
+    
+  end
+end

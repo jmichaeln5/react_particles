@@ -114,13 +114,27 @@ module ReactParticles
             if behavior == :invoke
               bin_dev_path = Rails.root.join("bin/dev")
               puts "Add bin/dev to start foreman"
-              if bin_dev_path.exist?
-                insert_into_file bin_dev_path.to_s,
-                %(\nrake assets:precompile\n), before: "foreman start -f Procfile.dev \"$@\""
-              else
+              unless bin_dev_path.exist?
                 copy_file "./dev", "bin/dev"
                 `chmod -R 0755 #{bin_dev_path}`
               end
+            end
+          end
+
+          def ensure_parallell_assets_execution
+            if behavior == :invoke
+
+              bin_dev_path = Rails.root.join("bin/dev")
+
+              insert_into_file bin_dev_path.to_s,
+              %(\nrake assets:precompile # Added by react_particles\n), before: "foreman start -f Procfile.dev \"$@\""
+
+              procfile_dev_path = Rails.root.join("Procfile.dev")
+              insert_into_file procfile_dev_path.to_s,
+              "\nworker: bundle exec rake react_particles:watch \n", before: "web: bin\/rails server -p 3000"
+
+
+
             end
           end
 
