@@ -39,7 +39,7 @@ module ReactParticles
             react_app_js_file = "#{javascript_dir_path}/application.js"
             if behavior == :invoke
               append_to_file(react_app_js_file, "// Entry point for the build script in your package.json' \n")
-              append_to_file(react_app_js_file, "import './src/index.jsx' \n")
+              append_to_file(react_app_js_file, "import './src/index.js' \n")
             end
           end
 

@@ -23,7 +23,14 @@ module ReactParticles
                 system "yarn add esbuild"
                 puts "Add build script"
 
-                build_script = "esbuild --bundle ./application.js --outfile=../../assets/javascripts/react_particles/application.js"
+                ### Config script for esbuild instead of cli 
+                ### https://stackoverflow.com/questions/68170439/configuring-esbuild-with-react-replacing-create-react-app
+
+                ### with JSX ext for files in src dir
+                # build_script = "esbuild --bundle ./application.js --outfile=../../assets/javascripts/react_particles/application.js"
+
+                ### with JS ext for files in src dir
+                build_script = "esbuild --bundle ./application.js --outfile=../../assets/javascripts/react_particles/application.js --loader:.js=jsx"
 
                 if (`npx -v`.to_f < 7.1 rescue "Missing")
                   puts %(Add "scripts": { "build": "#{build_script}" } to your package.json), :green

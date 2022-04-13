@@ -31,11 +31,11 @@ Some notes before you get started:
 
   you MUST bundle your JavaScript AND precompile your assets after changes are made.
 
-  The following rake tasks have been added to lib/tasks/react_particles for this process.
-
-  All are execution of commands are limited to React Particles but,
+  All of the executed commands are limited to React Particles but,
 
   are also executed when running javascript:[build | clobber] commands.
+
+  The following rake tasks have been added to lib/tasks/react_particles for this process:
 
   $ rails react_particles:javascript:build
     =>  'yarn build'
