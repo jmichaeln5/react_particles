@@ -8,51 +8,66 @@ module ReactParticles
         class JavascriptsGenerator < Rails::Generators::Base
           include ReactParticles::GeneratorHelpers
 
-          APP_ASSETS_CONFIG_DIR = "app/assets/config"
-          APP_ASSETS_JAVASCRIPTS_DIR = "app/assets/javascripts"
-
-          APP_ASSETS_JAVASCRIPTS_REACT_PARTICLES_DIR = "#{APP_ASSETS_JAVASCRIPTS_DIR}/react_particles"
-          REACT_PARTICLES_APP_JS_FILE = "#{APP_ASSETS_JAVASCRIPTS_REACT_PARTICLES_DIR}/application.js"
-          REACT_PARTICLES_MANIFEST_JS_FILE = "#{APP_ASSETS_CONFIG_DIR}/react_particles_manifest.js"
-
           def generate_react_particles_assets_javascripts_dir
+            javascripts_react_particles = "app/assets/javascripts/react_particles"
+
             case self.behavior
             when :invoke
               say indent_str("\nCreating react_particles javascripts directory...\n")
-               `mkdir #{APP_ASSETS_JAVASCRIPTS_REACT_PARTICLES_DIR}` unless (Dir.exists? APP_ASSETS_JAVASCRIPTS_REACT_PARTICLES_DIR)
+               `mkdir -p #{javascripts_react_particles}` unless (Dir.exists? javascripts_react_particles)
             when :revoke
-              `rm -rf #{APP_ASSETS_JAVASCRIPTS_REACT_PARTICLES_DIR}` if (Dir.exists? APP_ASSETS_JAVASCRIPTS_REACT_PARTICLES_DIR)
+              `rm -rf #{javascripts_react_particles}` if (Dir.exists? javascripts_react_particles)
             end
           end
 
-          def generate_react_particles_assets_javascripts_application_js
+          def generate_javascripts_react_particles_app_js_path
+            javascripts_react_particles_app_js_path = "app/assets/javascripts/react_particles/application.js"
             case self.behavior
             when :invoke
-              say indent_str("\n\nCreating react_particles " + "application.js".green + "\n   -JS for react_particles gets bundled here before getting delivered to asset pipeline \n\n")
+              say "\nCreating react_particles javascripts " + "#{javascripts_react_particles_app_js_path}".green + "\n    -React Particles JS bundles here before being delivered to Asset Pipeline\n\n"
 
-              `touch #{REACT_PARTICLES_APP_JS_FILE}` unless (File.exists? REACT_PARTICLES_APP_JS_FILE)
+              `touch #{javascripts_react_particles_app_js_path}` unless (File.exists? javascripts_react_particles_app_js_path)
             when :revoke
               say indent_str("\n\nRemoving react_particles " + "application.js".green + "\n   -JS for react_particles gets bundled here before getting delivered to asset pipeline \n\n")
 
-              `rm #{REACT_PARTICLES_APP_JS_FILE}` if (File.exists? REACT_PARTICLES_APP_JS_FILE)
+              `rm #{javascripts_react_particles_app_js_path}` if (File.exists? javascripts_react_particles_app_js_path)
             end
           end
 
-          def generate_react_particles_assets_manifest_js
+          def generate_react_particles_sprockets_manifest_path
+            sprockets_manifest_path = "app/assets/config/react_particles_manifest.js"
+
             case self.behavior
             when :invoke
-              say "\nCreating react_particles javascripts " + "react_particles_manifest.js".green + "\n    -Entry point for Engine's Asset Pipeline\n\n"
+              say "\nCreating react_particles javascripts " + "react_particles_manifest.js".green + "\n    -Entry point for Asset Pipeline\n\n"
 
-              `mkdir #{APP_ASSETS_CONFIG_DIR}` unless (Dir.exists? APP_ASSETS_CONFIG_DIR)
-              `touch #{REACT_PARTICLES_MANIFEST_JS_FILE}` unless (File.exists? REACT_PARTICLES_MANIFEST_JS_FILE)
+              `touch #{sprockets_manifest_path}` unless (File.exists? sprockets_manifest_path)
             when :revoke
-              puts indent_str("\n\nremoved ".red) + "#{REACT_PARTICLES_MANIFEST_JS_FILE}\n\n"
-              `rm #{REACT_PARTICLES_MANIFEST_JS_FILE}` if (File.exists? REACT_PARTICLES_MANIFEST_JS_FILE)
+              puts indent_str("\n\nremoved ".red) + "#{sprockets_manifest_path}\n\n"
+              `rm #{sprockets_manifest_path}` if (File.exists? sprockets_manifest_path)
             end
-            if Rails.root.join(REACT_PARTICLES_MANIFEST_JS_FILE).exist?
-              append_to_file REACT_PARTICLES_MANIFEST_JS_FILE, "//= link_tree ../javascripts/react_particles"
+
+            if Rails.root.join(sprockets_manifest_path).exist?
+              append_to_file sprockets_manifest_path, "//= link_tree ../javascripts/react_particles"
             end
           end
+
+          # def generate_builds
+          #   react_particles_builds_dir = "app/assets/react_particles/builds"
+          #   react_particles_builds_keep = "app/assets/react_particles/builds/.keep"
+          #   case self.behavior
+          #   when :invoke
+          #     # call_generator("react_particles:install:assets")
+          #     unless Rails.root.join(react_particles_builds_dir).exist?
+          #       `mkdir #{react_particles_builds_dir}`
+          #       `touch #{react_particles_builds_keep}`
+          #     end
+          #   when :revoke
+          #     if Rails.root.join(react_particles_builds_dir).exist?
+          #       `rm -rf #{react_particles_builds_dir}`
+          #     end
+          #   end
+          # end
 
         end
       end
