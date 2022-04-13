@@ -114,9 +114,13 @@ module ReactParticles
             if behavior == :invoke
               bin_dev_path = Rails.root.join("bin/dev")
               puts "Add bin/dev to start foreman"
-
-              copy_file "./dev", "bin/dev"
-              `chmod -R 0755 #{bin_dev_path}`
+              if bin_dev_path.exist?
+                insert_into_file bin_dev_path.to_s,
+                %(\nrake assets:precompile\n), before: "foreman start -f Procfile.dev \"$@\""
+              else
+                copy_file "./dev", "bin/dev"
+                `chmod -R 0755 #{bin_dev_path}`
+              end
             end
           end
 
