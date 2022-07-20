@@ -1,5 +1,20 @@
 =================================================================================================
 
+The following tasks have been added to lib/tasks/react_particles:
+
+$ rails react_particles:javascript:clobber
+  =>  'rm -rf app/assets/javascripts/react_particles'
+
+$ rails react_particles:javascript:build
+  =>  'yarn build'
+
+$ rails react_particles:start
+  =>  'yarn build && rake assets:precompile && rails s'
+
+Feel free to edit the auto generated tasks
+
+=================================================================================================
+
 Some notes before you get started:
 
 =================================================================================================
@@ -23,7 +38,7 @@ Some notes before you get started:
 
 =================================================================================================
 
-  ***** DISPLAYING CHANGES *****
+  ***** DISPLAYING CHANGES + STARTING SERVER *****
 
   React Particles is built on top of the jsbundling-rails gem.
 
@@ -31,22 +46,9 @@ Some notes before you get started:
 
   you MUST bundle your JavaScript AND precompile your assets after changes are made.
 
-  All of the executed commands are limited to React Particles but,
-
-  are also executed when running javascript:[build | clobber] commands.
-
-  The following rake tasks have been added to lib/tasks/react_particles for this process:
-
-  $ rails react_particles:javascript:build
-    =>  'yarn build'
-
-  $ rails react_particles:javascript:clobber
-    =>  'rm -rf app/assets/javascripts/react_particles'
+  To do so run the following command in the root of your project:
 
   $ rails react_particles:start
-    =>  'yarn build && rake assets:precompile && rails s'
-
-  Feel free to edit the generated rake tasks
 
 
 =================================================================================================
